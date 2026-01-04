@@ -1,0 +1,86 @@
+<div class="body">
+    <div class="container">
+        <div class="headerL">
+            <div class="text">{{header()}}</div>
+        </div>
+        @if (isLogin()) {
+        <div class="inputs">
+            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="userLogin()">
+                <div class="input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-at-sign-icon lucide-at-sign">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+                    </svg>
+                    <input type="email" placeholder="Email" formControlName="email" class="email-input"/>
+                    <div class="error required"> Email is required </div>
+                </div>
+                <div class="input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-key-round-icon lucide-key-round">
+                        <path
+                            d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                        <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                    </svg>
+                    <input type="password" placeholder="Password" formControlName="password" />
+                </div>
+                <div class="forgot-password">
+                    Did you forget your password? <span>Click here!</span>
+                </div>
+                <div class="submit-container">
+                    <button type="submit" class="submit">Login</button>
+                </div>
+            </form>
+            <p class="switch-button-paragraph">New to the site? Then please <button type="button" class="switch-button"
+                    (click)="showSignUp()">SignUp</button></p>
+        </div>
+        } @else if (isSignUp()) {
+        <div class="inputs">
+            <form [formGroup]="signUpForm" (ngSubmit)="userSignUp()">
+                <div class="input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-user-icon lucide-user">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <input type="text" placeholder="Username" formControlName="username" />
+                </div>
+                <div class="input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-at-sign-icon lucide-at-sign">
+                        <circle cx="12" cy="12" r="4" />
+                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+                    </svg>
+                    <input type="email" placeholder="Email" formControlName="email" />
+                </div>
+                <div class="input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-key-round-icon lucide-key-round">
+                        <path
+                            d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                        <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                    </svg>
+                    <input type="password" placeholder="Password" formControlName="password" />
+                </div>
+                <div class="submit-container">
+                    <button type="submit" class="submit">SignUp</button>
+                </div>
+            </form>
+            <p class="switch-button-paragraph">Have you already Signed Up? Then please <button type="button"
+                    class="switch-button" (click)="showLogin()">Login</button></p>
+        </div>
+        }
+        <div class="message"> {{message()}} </div>
+    </div>
+    <div class="right-side">
+        <img src="assets/Book.gif" alt="book">
+        <div class="quote">
+            <p>“Content that stays<br> with you longer<br> than any feed.”</p>
+        </div>
+    </div>
+</div>
