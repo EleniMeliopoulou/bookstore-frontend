@@ -1,11 +1,28 @@
+.body {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));    
+    align-items: start;
+}
+
+@media (max-width: 700px) {
+    .container {
+        justify-self: center;
+    }
+
+    .right-side { 
+        justify-self: center; 
+        margin-top: 50px; 
+    }
+  }
+  
+
 .container {
     display: flex;
     flex-direction: column;
-    justify-self: left;
-    margin-top: 140px;
+    margin-top: 160px;
     margin-left: 150px;
     width: 550px;
-    height: 550px;
+    height: 570px;
     padding-bottom: 30px;
     border-radius: 15px;
     box-shadow: 5px 10px 8px #888888;
@@ -41,7 +58,12 @@
     height: 80px;
 }
 
-.input input {
+.fields-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-input {
     height: 50px;
     width: 400px;
     background: transparent;
@@ -52,6 +74,11 @@
     margin-left: 35px;
 }
 
+.field-input:focus { 
+    border: 2px solid orange; 
+    background-color: #fff7f0; 
+}
+
 svg {
     margin-right: -20px;
 }
@@ -59,30 +86,28 @@ svg {
 .right-side {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    min-width: 0;
-    margin-right: 160px;
-    margin-top: -550px;
-    margin-left: 500px;
+    align-items: center;
+    justify-items: center;
+    margin-top: 200px;
     height: 500px;
 
     img {
-        margin-right: 320px;
+        margin-left: 80px;
         width: 190px;
         height: 130px;
     }
-}
 
-.quote {
-    font-weight: bolder;
-    font-size: 50px;
-    font-style: oblique;
-    margin-right: 220px;
-    border-left: 10px solid orange;
-    padding: 20px;
-    padding-top: 0px;
-    height: 250px;
-    margin-top: 30px;
+    .quote {
+        margin-left: 80px;
+        font-weight: bolder;
+        font-size: 50px;
+        font-style: oblique;
+        border-left: 10px solid orange;
+        padding: 20px;
+        padding-top: 0px;
+        height: 250px;
+        margin-top: 30px;
+    }
 }
 
 .forgot-password {
@@ -91,11 +116,6 @@ svg {
     font-size: 18px;
     margin-top: 28px;
     margin-bottom: 31px;
-}
-
-.forgot-password span {
-    color: orange;
-    cursor: pointer;
 }
 
 .submit-container {
@@ -129,6 +149,23 @@ svg {
     cursor: pointer;
 }
 
+.submit:hover {
+    color: white;
+    background: #fc6832;
+    border-color: #f57c50;
+}
+
+.password-button {
+    border: none;
+    background-color: transparent;
+    color: orange;
+}
+
+.password-button:hover {
+    color: rgb(251, 109, 2);
+    text-decoration: underline;
+}
+
 .switch-button-paragraph {
     display: flex;
     align-items: center;
@@ -145,24 +182,37 @@ svg {
     text-align: center;
     color: orange;
     font-size: 18px;
+}
+
+.switch-button:hover {
+    color: rgb(251, 109, 2);
     text-decoration: underline;
 }
 
 .error {
     display: none;
     color: red; 
+    margin-left: 50px;
     font-size: 12px;
-    margin-top: 60px;
-    width: 100px;
+    width: 150px;
 }
 
-.login-form.submitted .email-input.ng-invalid.ng-touched ~ .required { 
+.login-form.submitted .field-input.ng-invalid.ng-touched ~ .required { 
     display: flex;
-    flex-direction: row;
-    align-items: flex-start; 
+    margin-top: 5px;
 } 
 
-.login-form.submitted .email-input.ng-invalid.ng-touched { 
+.login-form.submitted .field-input.ng-invalid.ng-touched { 
+    border: 2px solid rgb(251, 65, 65) !important;
+    background-color: rgb(248, 194, 194) !important; 
+} 
+
+.signUp-form.submitted .field-input.ng-invalid.ng-touched ~ .required { 
+    display: flex;
+    margin-top: 5px;
+} 
+
+.signUp-form.submitted .field-input.ng-invalid.ng-touched { 
     border: 2px solid rgb(251, 65, 65) !important;
     background-color: rgb(248, 194, 194) !important; 
 } 

@@ -3,6 +3,14 @@
     height: 100px;
   }
   
+  .label{ 
+    margin-right: 60px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: rgb(82, 0, 0);
+    font-weight: bolder;
+  }
+
   .searchBox{
       margin-top: 30px;
       justify-self: center;

@@ -5,7 +5,7 @@ import { LoginSignUp } from '../components/loginSignUp/loginSignUp.component.js'
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,LoginSignUp],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

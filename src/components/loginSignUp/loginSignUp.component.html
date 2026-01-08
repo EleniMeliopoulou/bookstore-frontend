@@ -13,8 +13,10 @@
                         <circle cx="12" cy="12" r="4" />
                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
                     </svg>
-                    <input type="email" placeholder="Email" formControlName="email" class="email-input"/>
-                    <div class="error required"> Email is required </div>
+                    <div class="fields-container">
+                        <input class="field-input" type="email" placeholder="Email" formControlName="email" class="field-input" />
+                        <div class="error required">* Email is required </div>
+                    </div>
                 </div>
                 <div class="input">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -24,10 +26,14 @@
                             d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
                         <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
                     </svg>
-                    <input type="password" placeholder="Password" formControlName="password" />
+                    <div class="fields-container">
+                        <input class="field-input" type="password" placeholder="Password" formControlName="password" class="field-input"/>
+                        <div class="error required">* Password is required </div>
+                    </div>
                 </div>
                 <div class="forgot-password">
-                    Did you forget your password? <span>Click here!</span>
+                    <p>Did you forget your password? <button type="button"
+                    class="password-button" (click)="forgotPasswordModal()">Click here!</button></p>
                 </div>
                 <div class="submit-container">
                     <button type="submit" class="submit">Login</button>
@@ -38,7 +44,7 @@
         </div>
         } @else if (isSignUp()) {
         <div class="inputs">
-            <form [formGroup]="signUpForm" (ngSubmit)="userSignUp()">
+            <form class="signUp-form" [formGroup]="signUpForm" (ngSubmit)="userSignUp()">
                 <div class="input">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#6a6868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -46,7 +52,10 @@
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
-                    <input type="text" placeholder="Username" formControlName="username" />
+                    <div class="fields-container">
+                        <input class="field-input" type="text" placeholder="Username" formControlName="username" class="field-input"/>
+                        <div class="error required">* Username is required </div>
+                    </div>
                 </div>
                 <div class="input">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -55,7 +64,10 @@
                         <circle cx="12" cy="12" r="4" />
                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
                     </svg>
-                    <input type="email" placeholder="Email" formControlName="email" />
+                    <div class="fields-container">
+                        <input class="field-input" type="email" placeholder="Email" formControlName="email" class="field-input" />
+                        <div class="error required">* Email is required </div>
+                    </div>
                 </div>
                 <div class="input">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -65,7 +77,10 @@
                             d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
                         <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
                     </svg>
-                    <input type="password" placeholder="Password" formControlName="password" />
+                    <div class="fields-container">
+                        <input class="field-input" type="password" placeholder="Password" formControlName="password" class="field-input"/>
+                        <div class="error required">* Password is required </div>
+                    </div>
                 </div>
                 <div class="submit-container">
                     <button type="submit" class="submit">SignUp</button>

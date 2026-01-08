@@ -1,5 +1,6 @@
 <div class="header">
     <div class="header-right">
+        <p class="label">Welcome {{ (username$ | async) }}</p>
         <button type="button" class="logoutButton" (click)="logout()">
             <strong>Logout</strong>
         </button>

@@ -7,14 +7,13 @@ export interface Books {
     image?: string;
     publishedDate: string;
     rating: number;
-    title:string
+    title: string
     userId: number;
 }
 
-export interface UserProfile {
-    id?: number;
-    borrowedBookTitles?: string;
-    email: string;
-    password: string;
-    username: string;
+export interface UserProfile { 
+    id: number; 
+    username: string; 
+    email: string; 
+    titles: string[]; 
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, inject, signal } from "@angular/core";
+import { Component, OnInit, inject, signal } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from "../../services/user.service.js";
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from "../../interfaces/interfaces.js";
 import { Router } from '@angular/router';
+import { login } from "../../ngrx/login-page.actions.js";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: 'app-login-signup',
@@ -23,6 +25,7 @@ export class LoginSignUp implements OnInit {
   userProfile = inject(UserService);
   fb = inject(FormBuilder);
   router = inject(Router);
+  store = inject(Store);
 
   signUpForm!: FormGroup;
   loginForm!: FormGroup;
@@ -44,7 +47,6 @@ export class LoginSignUp implements OnInit {
     this.isSignUp.set(false);
     this.header.set("Login");
     this.message.set('');
-    console.log("Changed to Login page");
     this.signUpForm.reset();
   }
 
@@ -53,8 +55,11 @@ export class LoginSignUp implements OnInit {
     this.isSignUp.set(true);
     this.header.set("SignUp");
     this.message.set('');
-    console.log("Changed to SignUp page");
     this.loginForm.reset();
+  }
+
+  public forgotPasswordModal() {
+    this.router.navigate(['/forgot-password']);
   }
 
   public userLogin() {
@@ -65,10 +70,12 @@ export class LoginSignUp implements OnInit {
 
     if (this.loginForm.invalid) return;
 
-    console.log("Login submit button");
-
     const emailValue = this.loginForm.get('email')?.value;
     if (!emailValue) return;
+    const password = this.loginForm.get('password')?.value;
+    if(!password) return;
+
+    this.store.dispatch(login({ email: emailValue, password: password }));
 
     this.userProfile.getUser(emailValue).subscribe({
       next: (user) => {
@@ -88,6 +95,12 @@ export class LoginSignUp implements OnInit {
       this.message.set("Please fill all fields");
       return;
     }
+
+    this.signUpForm.markAllAsTouched();
+    this.signUpForm.get('username')?.markAsDirty();
+    this.signUpForm.get('email')?.markAsDirty();
+    this.signUpForm.get('password')?.markAsDirty();
+    document.querySelector('.signUp-form')?.classList.add('submitted');
 
     const newUser: UserProfile = this.signUpForm.value;
 
