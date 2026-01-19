@@ -1,76 +1,193 @@
-.header{
-    background: linear-gradient(0deg,rgba(95, 139, 76, 1) 0%, rgba(57, 115, 13, 1) 100%);  
-    height: 100px;
-  }
-  
-  .label{ 
-    margin-right: 60px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: rgb(82, 0, 0);
-    font-weight: bolder;
+.header {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(0deg, rgba(95, 139, 76, 1) 0%, rgba(57, 115, 13, 1) 100%);
+  height: 100px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  position: fixed;
+  top: 15px;
+  left: 10px;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-end;
+  position: fixed;
+  top: 15px;
+  right: 10px;
+}
+
+.logoutButton {
+  margin-right: 5px;
+  background: #f4a43b;
+  color: white;
+  border-radius: 15px;
+  border-color: #ffbd66;
+}
+
+.logoutButton:hover {
+  color: white;
+  background: #FF904F;
+  border-color: rgb(255, 159, 63);
+}
+
+.menuButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menuButton.dropdown-toggle::after {
+  display: none !important;
+}
+
+.line {
+  stroke: black;
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.menuButton:hover .line {
+  stroke: #f4a43b;
+}
+
+.menuButton.active .top {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menuButton.active .middle {
+  opacity: 0;
+}
+
+.menuButton.active .bottom {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+hr {
+  padding: 0;
+  margin: 0;
+  color: #269722;
+}
+
+.dropdown-items {
+  top: 5px;
+  border: 1px solid green;
+  background-color: #fccf94;
+}
+
+.item {
+  font-weight: 500;
+}
+
+.item:hover {
+  background-color: #ffbd66;
+  font-weight: bold;
+}
+
+.dropdown-item.active {
+  background-color: #ffb350 !important;
+  color: black !important;
+  font-weight: bold;
+}
+
+.searchBox {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBox input {
+  width: 12cm;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.searchBox input:focus {
+  outline-color: #f4a43b;
+}
+
+.searchButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  color: #f4a43b;
+}
+
+.profile-button {
+  border: none;
+  background-color: transparent;
+  margin-right: 5px;
+}
+
+.profile-button:hover {
+  color: #f4a43b;
+}
+
+.cart-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.cart-button:hover {
+  transform: scale(1.1);
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  animation: badge-pop 0.3s ease;
+}
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(0);
   }
 
-  .searchBox{
-      margin-top: 30px;
-      justify-self: center;
+  50% {
+    transform: scale(1.2);
   }
-  
-  .searchBox input {
-      width: 12cm;
-      font-size: 1rem;
-      padding: 0.5rem;
-      border-radius: 50px;
-      border: 1px solid #ccc;
+
+  100% {
+    transform: scale(1);
   }
-  .searchBox input:focus {
-      outline-color: #f4a43b;
-  }
-  
-  .searchButton {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-  }
-    
-  .searchButton i:hover {
-      color: #f4a43b;
-  }
-  
-  .header-right{
-    position: fixed;
-    top: 15px;
-    right: 10px;
-  }
-  
-  .menuButton{
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      height: 40px;
-      width: 40px;
-  }
-  
-  .menuButton:hover{
-      background-color: #f4a43b;
-      border-radius: 50px;
-  }
-  
-  .menuButton:hover i {
-      color: white;
-  } 
-  
-  .logoutButton{
-    background: #f4a43b;
-    color: white;
-    border-radius: 15px;
-    border-color: #ffbd66;
-  }
-  
-  .logoutButton:hover{
-    background: rgb(255, 255, 128);
-    color: black;
-    border-color: rgb(255, 255, 158);
-  }
+}
+
+/* Αν ο αριθμός είναι > 9, κάνε το badge λίγο μεγαλύτερο */
+.cart-badge:has(+ :where([data-count="10"], [data-count="99"])) {
+  width: 24px;
+  border-radius: 12px;
+}

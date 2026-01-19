@@ -1,7 +1,26 @@
-.searchBox {
-  display: none;
+.container {
+  margin-top: 90px;
+  margin-left: 100px;
 }
-  .textBody{
-    margin-top: 90px;
-    margin-left: 100px; 
-  }
+
+.title{
+  display: flex;
+  flex-direction: row;
+}
+
+svg{
+  margin-right: 7px;
+  margin-top: 8px;
+}
+
+.info{
+  margin-left:30px;
+}
+
+p{
+  font-style: oblique;
+}
+
+hr{
+  width: 850px;
+}

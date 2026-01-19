@@ -33,4 +33,9 @@ export class UserService {
             })
         );
     }
+
+    updateUser(email: string, username: string) {
+        return this.http.put<{ email: string, username: string }>('http://localhost:8080/updateuser',
+            { email, username }).pipe( catchError(err => throwError(() => err)));
+    }
 }

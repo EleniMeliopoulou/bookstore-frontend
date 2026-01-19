@@ -1,27 +1,58 @@
 <div class="header">
-    <div class="header-right">
-        <p class="label">Welcome {{ (username$ | async) }}</p>
-        <button type="button" class="logoutButton" (click)="logout()">
-            <strong>Logout</strong>
-        </button>
-        <div ngbDropdown>
-            <button type="button" class="menuButton" ngbDropdownToggle> <svg xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu">
-                    <path d="M4 5h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 19h16" />
+    <div class="header-left">
+        <div ngbDropdown #drop="ngbDropdown">
+            <button type="button" class="menuButton" ngbDropdownToggle [class.active]="drop.isOpen()"> <svg width="30"
+                    height="30" viewBox="0 0 24 24">
+                    <line class="line top" x1="3" y1="6" x2="21" y2="6" />
+                    <line class="line middle" x1="3" y1="12" x2="21" y2="12" />
+                    <line class="line bottom" x1="3" y1="18" x2="21" y2="18" />
                 </svg></button>
-            <div ngbDropdownMenu="dropdown-items">
-                <button ngbDropdownItem (click)="homePage()">Home</button>
-                <button ngbDropdownItem (click)="bookListPage()">My Books</button>
-                <button ngbDropdownItem (click)="aboutPage()">About</button>
-                <button ngbDropdownItem (click)="contactPage()">Contact</button>
+            <div ngbDropdownMenu class="dropdown-items">
+                <a ngbDropdownItem class="item" routerLink="/home" routerLinkActive="active">Home</a>
+                <hr>
+                <a ngbDropdownItem class="item" routerLink="/booklist" routerLinkActive="active">My Books</a>
+                <hr>
+                <a ngbDropdownItem class="item" routerLink="/about" routerLinkActive="active">About</a>
+                <hr>
+                <a ngbDropdownItem class="item" routerLink="/contact" routerLinkActive="active">Contact</a>
+                <hr>
             </div>
         </div>
     </div>
+    <div class="header-right">
+        <button type="button" class="cart-button" routerLink="/cart">
+            <div class="cart-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-shopping-cart-icon lucide-shopping-cart">
+                    <circle cx="8" cy="21" r="1" />
+                    <circle cx="19" cy="21" r="1" />
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
+                @if (cartItemCount().length > 0) {
+                <span class="cart-badge">{{ cartItemCount().length }}</span>
+                }
+            </div>
+        </button>
+        <button type="button" class="profile-button" (click)="profileModal()"><svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen-icon lucide-user-pen">
+                <path d="M11.5 15H7a4 4 0 0 0-4 4v2" />
+                <path
+                    d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+                <circle cx="10" cy="7" r="4" />
+            </svg></button>
+        <button type="button" class="logoutButton" routerLink="">
+            <strong>Logout</strong>
+        </button>
+    </div>
     <div class="searchBox">
         <input type="text" placeholder="Search" />
-        <button class="searchButton"></button>
+        <button class="searchButton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-search-icon lucide-search">
+                <path d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+            </svg></button>
     </div>
 </div>

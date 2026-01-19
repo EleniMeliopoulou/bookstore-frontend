@@ -1,0 +1,74 @@
+<app-header></app-header>
+<div class="container mt-5">
+    <div class="list-header mb-4">
+        <h1>My List</h1>
+        <p class="text-muted">{{ bookListItems().length }} item</p>
+    </div>
+
+    @if (bookListItems().length === 0) {
+    <div class="empty-list text-center py-5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-book-open-text-icon lucide-book-open-text">
+            <path d="M12 7v14" />
+            <path d="M16 12h2" />
+            <path d="M16 8h2" />
+            <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+            <path d="M6 12h2" />
+            <path d="M6 8h2" />
+        </svg>
+        <h3>Your list is empty</h3>
+        <p class="text-muted">Add Books</p>
+        <a routerLink="/home" class="btn btn-primary mt-3" routerLink="/home">
+            Go To Home
+        </a>
+    </div>
+    }
+
+    @if (bookListItems().length > 0) {
+    <div class="list-items">
+        @for (item of bookListItems(); track item.id) {
+        <div class="list-item mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <img [src]="item.image" [alt]="item.title" class="img-fluid list-item-image">
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-1">{{ item.title }}</h5>
+                    @if (item.author) {
+                    <p class="text-muted mb-0">{{ item.author }}</p>
+                    }
+                    @if (item.rating) {
+                    <div class="rating mt-2">
+                        <span class="text-warning">★</span>
+                        <span>{{ item.rating }}</span>
+                    </div>
+                    }
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-danger btn-sm" (click)="removeFromList(item.id)">
+                        <svg style="margin-right: 2px;" xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trash2-icon lucide-trash-2">
+                            <path d="M10 11v6" />
+                            <path d="M14 11v6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                            <path d="M3 6h18" />
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="list-actions mt-4 d-flex justify-content-between">
+            <button class="btn btn-outline-secondary" (click)="clearList()">
+                Clear List
+            </button>
+        </div>
+    </div>
+    }
+</div>

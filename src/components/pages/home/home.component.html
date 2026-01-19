@@ -3,3 +3,122 @@
     <h2> Welcome to Our Online Library</h2>
     <p>Explore thousands of books and borrow them for free — anytime, anywhere.</p>
 </div>
+<div class="container mt-4">
+    <!-- Error Message -->
+    @if (error()) {
+    <div class="alert alert-danger">
+        {{ error() }}
+    </div>
+    }
+
+    <!-- Loading Spinner -->
+    @if (isLoading()) {
+    <div class="loading-container text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading books...</p>
+    </div>
+    }
+
+    <!-- Carousels -->
+    @if (!isLoading() && displayedCarousels().length > 0) {
+    <div class="page-info mb-4">
+        <h5>Page {{ currentPage() }} of {{ totalPages() }}</h5>
+    </div>
+
+    @for (genreCarousel of displayedCarousels(); track genreCarousel.genre) {
+    <div class="genre-section mb-5">
+        <h2 class="mb-3">{{ genreCarousel.genre }}</h2>
+
+        <div [id]="getCarouselId(genreCarousel.genre)" class="carousel slide">
+            <div class="carousel-inner">
+                @for (chunk of genreCarousel.bookChunks; track $index) {
+                <div class="carousel-item" [class.active]="$index === 0">
+                    <div class="row g-3">
+                        @for (book of chunk; track book.id) {
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="book-card">
+                                <div class="book-image-container">
+                                    <a [routerLink]="['/book-info', book.id]" class="book-image-link">
+                                        <img [src]="book.image" class="book-image" [alt]="book.title">
+                                    </a>
+                                </div>
+                                <div class="book-info">
+                                    <h6 class="book-title" [title]="book.title">{{ book.title }}</h6>
+                                    @if (book.rating) {
+                                    <div class="book-rating">
+                                        <span class="rating-stars">★</span>
+                                        <span class="rating-value">{{ book.rating }}</span>
+                                    </div>
+                                    }
+                                    <button class="btn btn-primary btn-sm w-100 mt-2" (click)="addToCart(book)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-shopping-cart-icon lucide-shopping-cart">
+                                            <circle cx="8" cy="21" r="1" />
+                                            <circle cx="19" cy="21" r="1" />
+                                            <path
+                                                d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                                        </svg> Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                }
+            </div>
+
+            @if (genreCarousel.bookChunks.length > 1) {
+            <button class="carousel-control-prev" type="button"
+                [attr.data-bs-target]="'#' + getCarouselId(genreCarousel.genre)" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button"
+                [attr.data-bs-target]="'#' + getCarouselId(genreCarousel.genre)" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+    <nav aria-label="Page navigation" class="mt-5 mb-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage() === 1">
+                <button class="page-link" (click)="previousPage()" [disabled]="currentPage() === 1">
+                    Previous
+                </button>
+            </li>
+
+            @for (page of getPageNumbers(); track page) {
+            <li class="page-item" [class.active]="page === currentPage()">
+                <button class="page-link" (click)="goToPage(page)">
+                    {{ page }}
+                </button>
+            </li>
+            }
+
+            <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+                <button class="page-link" (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+                    Next
+                </button>
+            </li>
+        </ul>
+    </nav>
+    }
+    }
+
+    <!-- No Data Message -->
+    @if (!isLoading() && displayedCarousels().length === 0 && !error()) {
+    <div class="alert alert-info">
+        No books found.
+    </div>
+    }
+</div>

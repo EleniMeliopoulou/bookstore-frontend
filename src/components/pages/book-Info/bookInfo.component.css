@@ -1,0 +1,88 @@
+.info-container{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    border-radius: 15px;
+    width: 700px;
+    height: 900px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container{
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid orange;
+    border-radius: 20px;
+    width: 160px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.more-info-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    width: 330px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.book-title{
+    text-decoration: underline;
+    font-style: oblique;
+}
+
+.more-info{
+    margin-top: 5px;
+    font-style: oblique;
+}
+
+.description-container{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.description{
+    font-style: italic;
+}
+
+hr{
+    margin-left: 10px;
+    width: 680px;
+    border-top: 5px dashed blue;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    width: 200px;
+}
+
+.like-button{
+    margin-left: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: context-menu;
+}
+
+svg:hover{
+    fill: black;
+    cursor: pointer;
+}
+

@@ -1,0 +1,72 @@
+<app-header></app-header>
+<div class="container mt-5">
+    <div class="cart-header mb-4">
+        <h1>My Cart</h1>
+        <p class="text-muted">{{ cartItems().length }} item</p>
+    </div>
+
+    @if (cartItems().length === 0) {
+    <div class="empty-cart text-center py-5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="text-muted mb-3">
+            <circle cx="8" cy="21" r="1" />
+            <circle cx="19" cy="21" r="1" />
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+        </svg>
+        <h3>Your cart is empty</h3>
+        <p class="text-muted">Add Books to Begin</p>
+        <a routerLink="/home" class="btn btn-primary mt-3" routerLink="/home">
+            Continue Shopping
+        </a>
+    </div>
+    }
+
+    @if (cartItems().length > 0) {
+    <div class="cart-items">
+        @for (item of cartItems(); track item.id) {
+        <div class="cart-item mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <img [src]="item.image" [alt]="item.title" class="img-fluid cart-item-image">
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-1">{{ item.title }}</h5>
+                    @if (item.author) {
+                    <p class="text-muted mb-0">{{ item.author }}</p>
+                    }
+                    @if (item.rating) {
+                    <div class="rating mt-2">
+                        <span class="text-warning">★</span>
+                        <span>{{ item.rating }}</span>
+                    </div>
+                    }
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-danger btn-sm" (click)="removeFromCart(item.id)">
+                        <svg style="margin-right: 2px;" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trash2-icon lucide-trash-2">
+                            <path d="M10 11v6" />
+                            <path d="M14 11v6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                            <path d="M3 6h18" />
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="cart-actions mt-4 d-flex justify-content-between">
+            <button class="btn btn-outline-secondary" (click)="clearCart()">
+                Clear Cart
+            </button>
+            <button class="btn btn-success">
+                Place your order
+            </button>
+        </div>
+    </div>
+    }
+</div>
