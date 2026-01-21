@@ -1,12 +1,50 @@
 .cart-header {
     border-bottom: 2px solid #dee2e6;
     padding-bottom: 1rem;
+    display: grid;
+    grid-template-columns: auto 150px
 }
 
 .cart-header h1 {
     font-size: 2rem;
     font-weight: 600;
     color: #333;
+}
+
+.cart-header-left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button{
+    background-color: rgb(255, 214, 125);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+}
+
+.nav-button span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.nav-button span:after {
+    content: '\00ab';
+    position: absolute;
+    opacity: 0;
+    left: -20px;
+    transition: 0.5s;
+}
+
+.nav-button:hover span {
+    padding-left: 25px;
+}
+
+.nav-button:hover span:after {
+    opacity: 1;
+    left: 0;
 }
 
 .empty-cart {

@@ -1,5 +1,5 @@
 import { catchError, map, mergeMap, of, tap } from "rxjs";
-import { UserService } from "../services/user.service.js";
+import { UserService } from "../../services/user.service.js";
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { login, loginFailure, loginSuccess, updateUsername, updateUsernameFailure, updateUsernameSuccess } from "./login-page.actions.js";

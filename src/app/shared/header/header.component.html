@@ -12,10 +12,6 @@
                 <hr>
                 <a ngbDropdownItem class="item" routerLink="/booklist" routerLinkActive="active">My Books</a>
                 <hr>
-                <a ngbDropdownItem class="item" routerLink="/about" routerLinkActive="active">About</a>
-                <hr>
-                <a ngbDropdownItem class="item" routerLink="/contact" routerLinkActive="active">Contact</a>
-                <hr>
             </div>
         </div>
     </div>
@@ -47,12 +43,30 @@
         </button>
     </div>
     <div class="searchBox">
-        <input type="text" placeholder="Search" />
-        <button class="searchButton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-search-icon lucide-search">
+        <input type="text" placeholder="Search..." [value]="searchInput()" (input)="onInputChange($event)"
+            (keyup.enter)="handleSearchClick()" />
+        <button class="searchButton" (click)="handleSearchClick()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
                 <path d="m21 21-4.34-4.34" />
                 <circle cx="11" cy="11" r="8" />
             </svg></button>
+
+            @if(searchResults().length > 0){
+                <div class="dpdown">
+                    @for (book of searchResults(); track book.id) {
+                        <div class="dpdown-row" (click)="selectBook(book)">
+                            <img 
+                                [src]="getImageUrl(book)" 
+                                alt="cover" 
+                                class="dpdown-cover"
+                            />
+                            <span class="dpdown-title">
+                                {{ truncateTitle(book.title) }}
+                            </span>
+                        </div>
+                    }
+                </div>
+            }
     </div>
 </div>

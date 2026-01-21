@@ -1,7 +1,7 @@
 import { createReducer, createSelector, on } from "@ngrx/store";
 import { loginSuccess, updateUsernameSuccess } from "./login-page.actions.js";
-import { UserProfile } from "../interfaces/interfaces.js";
-import { AppState } from "./app.state.js";
+import { UserProfile } from "../../interfaces/interfaces.js";
+import { AppState } from "../app.state.js";
 
 export interface AuthState {
     user: UserProfile | null;

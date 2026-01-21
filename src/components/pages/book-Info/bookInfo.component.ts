@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from "@angular/core";
 import { BookService } from "../../../services/book.service.js";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { Books } from "../../../interfaces/interfaces.js";
 import { HeaderComponent } from "../../../app/shared/header/header.component.js";
 import { CommonModule } from "@angular/common";
@@ -11,7 +11,7 @@ import { BookListService } from "../../../services/booklist.service.js";
 @Component({
     selector: 'app-bookInfo-component',
     standalone: true,
-    imports: [HeaderComponent, CommonModule],
+    imports: [HeaderComponent, CommonModule, RouterLink],
     templateUrl: './bookInfo.component.html',
     styleUrl: './bookInfo.component.css'
 })
@@ -25,6 +25,7 @@ export class BookInfoComponent implements OnInit{
     //Signals
     bookData = signal<Books | null>(null);
     error = signal<string | null>(null);
+    isLiked = signal<boolean>(false);
 
     //Computed Signals
     book = computed(() => this.bookData());
@@ -37,12 +38,13 @@ export class BookInfoComponent implements OnInit{
     rating = computed(() => this.bookData()?.rating ?? 'No rating');
 
     ngOnInit(): void {
-        const id = this.route.snapshot.paramMap.get('id');
+      this.route.paramMap.subscribe(params => { const id = params.get('id');
         if (id) {
             this.showInfo(Number(id));
         } else {
             this.error.set('Δεν βρέθηκε ID βιβλίου');
         }
+      });
     }
 
     showInfo(id: number){
@@ -73,15 +75,29 @@ export class BookInfoComponent implements OnInit{
 
       addToBookList(book: Books) {
         console.log('Adding to list:', book);
-        this.bookListService.addItem(book);
-        Swal.fire({
-          position: "bottom-right",
-          icon: "success",
-          title: `Added To List`,
-          showConfirmButton: false,
-          timer: 2000,
-          width: 400,
-        });
+        this.isLiked.update(liked => !liked)
+        if(this.isLiked()){
+          this.bookListService.addItem(book);
+          Swal.fire({
+            position: "bottom-right",
+            icon: "success",
+            title: `Added To List`,
+            showConfirmButton: false,
+            timer: 2000,
+            width: 400,
+          });
+        }else {
+          this.bookListService.removeItem(book.id);
+          Swal.fire({
+            position: "bottom-right",
+            icon: "error",
+            title: `Remove From List`,
+            showConfirmButton: false,
+            timer: 2000,
+            width: 400,
+          });
+        }
+       
       }
 
 }

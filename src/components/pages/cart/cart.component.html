@@ -1,8 +1,15 @@
 <app-header></app-header>
 <div class="container mt-5">
     <div class="cart-header mb-4">
-        <h1>My Cart</h1>
-        <p class="text-muted">{{ cartItems().length }} item</p>
+        <div class="cart-header-right">
+            <h1>My Cart</h1>
+            <p class="text-muted">{{ cartItems().length }} item</p>
+        </div>
+        <div class="cart-header-left">
+            <button class="nav-button" routerLink="/home">
+                <span>Go To Home</span>
+            </button>
+        </div>
     </div>
 
     @if (cartItems().length === 0) {
@@ -44,8 +51,9 @@
                 </div>
                 <div class="col-md-4 text-end">
                     <button class="btn btn-danger btn-sm" (click)="removeFromCart(item.id)">
-                        <svg style="margin-right: 2px;" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        <svg style="margin-right: 2px;" xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-trash2-icon lucide-trash-2">
                             <path d="M10 11v6" />
                             <path d="M14 11v6" />
@@ -63,7 +71,7 @@
             <button class="btn btn-outline-secondary" (click)="clearCart()">
                 Clear Cart
             </button>
-            <button class="btn btn-success">
+            <button class="btn btn-success" (click)="placeOrder()">
                 Place your order
             </button>
         </div>

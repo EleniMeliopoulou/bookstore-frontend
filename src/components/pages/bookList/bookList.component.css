@@ -1,12 +1,50 @@
 .list-header {
     border-bottom: 2px solid #dee2e6;
     padding-bottom: 1rem;
+    display: grid;
+    grid-template-columns: auto 150px
 }
 
 .list-header h1 {
     font-size: 2rem;
     font-weight: 600;
     color: #333;
+}
+
+.list-header-left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button{
+    background-color: rgb(255, 214, 125);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+}
+
+.nav-button span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.nav-button span:after {
+    content: '\00ab';
+    position: absolute;
+    opacity: 0;
+    left: -20px;
+    transition: 0.5s;
+}
+
+.nav-button:hover span {
+    padding-left: 25px;
+}
+
+.nav-button:hover span:after {
+    opacity: 1;
+    left: 0;
 }
 
 .empty-list {
@@ -25,10 +63,12 @@
     border-radius: 12px;
     padding: 1.5rem;
     transition: box-shadow 0.3s ease;
+    width: 100%;
+    height: 450px;
 }
 
 .list-item:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .list-item-image {
@@ -40,12 +80,6 @@
 .list-item h5 {
     color: #333;
     font-weight: 600;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
 }
 
 .list-actions {
@@ -60,4 +94,27 @@
         margin-top: 1rem;
         text-align: left !important;
     }
+}
+
+.btn-success span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.btn-success span:after {
+    content: '\00ab';
+    position: absolute;
+    opacity: 0;
+    left: -100px;
+    transition: 0.5s;
+}
+
+.btn-success:hover span {
+    padding-left: 25px;
+}
+
+.btn-success:hover span:after {
+    opacity: 1;
+    left: 0;
 }

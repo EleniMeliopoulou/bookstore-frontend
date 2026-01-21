@@ -16,6 +16,13 @@
     justify-content: center;
 }
 
+.arrow-container{
+    svg:hover{
+        fill: rgb(157, 201, 250);
+    }
+}
+
+
 .image-container{
     padding: 10px;
     margin: 10px;
@@ -82,7 +89,7 @@ hr{
 }
 
 svg:hover{
-    fill: black;
+    fill: red;
     cursor: pointer;
 }
 

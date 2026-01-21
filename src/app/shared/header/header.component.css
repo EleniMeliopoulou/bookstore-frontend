@@ -10,7 +10,7 @@
   flex-direction: row;
   justify-items: flex-start;
   position: fixed;
-  top: 15px;
+  top: 50px;
   left: 10px;
 }
 
@@ -19,8 +19,12 @@
   flex-direction: row;
   justify-items: flex-end;
   position: fixed;
-  top: 15px;
+  top: 50px;
   right: 10px;
+}
+
+.header-right button, .header-left button { 
+  position: relative; z-index: 100; 
 }
 
 .logoutButton {
@@ -100,7 +104,7 @@ hr {
 }
 
 .searchBox {
-  margin-top: 10px;
+  position: relative;
   display: flex;
   justify-content: center;
 }
@@ -114,7 +118,8 @@ hr {
 }
 
 .searchBox input:focus {
-  outline-color: #f4a43b;
+  outline: none;
+  border-color: #f4a43b;
 }
 
 .searchButton {
@@ -127,14 +132,82 @@ hr {
   color: #f4a43b;
 }
 
+.dpdown {
+  position: absolute;
+  top: 100%;
+  left: 600px;
+  right: 600px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.dpdown-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dpdown-row:last-child {
+  border-bottom: none;
+}
+
+.dpdown-row:hover {
+  background-color: #f8f9fa;
+}
+
+.dpdown-cover {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.dpdown-title {
+  font-size: 0.9rem;
+  color: #333;
+  flex: 1;
+}
+
+/* Scrollbar styling */
+.dpdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dpdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.dpdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+.dpdown::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .profile-button {
   border: none;
   background-color: transparent;
   margin-right: 5px;
+  transition: all 0.3s ease;
 }
 
 .profile-button:hover {
   color: #f4a43b;
+  transform: scale(1.1);
 }
 
 .cart-button {
@@ -148,6 +221,7 @@ hr {
 
 .cart-button:hover {
   transform: scale(1.1);
+  color: #f4a43b;
 }
 
 .cart-icon-wrapper {

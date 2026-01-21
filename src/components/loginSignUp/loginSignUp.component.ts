@@ -4,7 +4,7 @@ import { UserService } from "../../services/user.service.js";
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from "../../interfaces/interfaces.js";
 import { Router } from '@angular/router';
-import { login } from "../../ngrx/login-page.actions.js";
+import { login } from "../../ngrx/login-page/login-page.actions.js";
 import { Store } from "@ngrx/store";
 
 @Component({

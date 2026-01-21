@@ -6,8 +6,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes.js';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { authReducer } from '../ngrx/login-page.reducer.js';
-import { LoginPageEffects } from '../ngrx/login-page.effects.js';
+import { authReducer } from '../ngrx/login-page/login-page.reducer.js';
+import { LoginPageEffects } from '../ngrx/login-page/login-page.effects.js';
 import { metaReducers } from './local-storage.metareducer.js';
 
 export const appConfig: ApplicationConfig = {

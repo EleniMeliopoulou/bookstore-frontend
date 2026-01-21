@@ -15,11 +15,11 @@ export class BookService {
         return this.http.get<Books[]>(this.apiUrl);
     }
 
-    searchBook(title: string): Observable<Books[]> {
+    searchBooks(title: string) {
         return this.http.get<Books[]>(`http://localhost:8080/searchbook/${title}`);
     }
 
-    getBook(id: number): Observable<Books>{
+    getBook(id: number): Observable<Books> {
         return this.http.get<Books>(`http://localhost:8080/getbook?id=${id}`).pipe(
             catchError((error) => { return throwError(() => error); })
         );

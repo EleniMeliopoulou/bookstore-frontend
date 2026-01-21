@@ -1,35 +1,53 @@
-import { Component, OnInit, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { selectUser, selectUsername } from '../../../ngrx/login-page.reducer.js';
-import { AsyncPipe } from '@angular/common';
+import { selectUser, selectUsername } from '../../../ngrx/login-page/login-page.reducer.js';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../services/user.service.js';
-import { combineLatest, map, take } from 'rxjs';
+import { Subject, combineLatest, debounceTime, map, take } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
-import { updateUsername } from '../../../ngrx/login-page.actions.js';
+import { updateUsername } from '../../../ngrx/login-page/login-page.actions.js';
 import { CartService } from '../../../services/cart.service.js';
+import { BookService } from '../../../services/book.service.js';
+import { Books } from '../../../interfaces/interfaces.js';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgbModule, RouterLink,RouterModule],
+  imports: [NgbModule, RouterLink, RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
-
+export class HeaderComponent implements OnInit {
   //Injects
   store = inject(Store);
   userProfile = inject(UserService);
   cartService = inject(CartService);
-    
+  bookService = inject(BookService);
+  elementRef = inject(ElementRef);
+  router = inject(Router);
+
+  //Signals
+  searchInput = signal<string>('');
+  searchResults = signal<Books[]>([]);
+
+  private searchSubject = new Subject<string>();
+
   cartItemCount = this.cartService.getCartItems;
 
   username$ = this.store.select(selectUsername);
   email$ = this.store.select(selectUser).pipe(map(u => u?.email));
+
+  ngOnInit(): void {
+
+    this.searchSubject.pipe(
+      debounceTime(1000)
+    ).subscribe(searchTerm => this.fetchSearchResults(searchTerm))
+  }
+
 
   public profileModal() {
     combineLatest([this.username$, this.email$]).pipe(take(1)).subscribe(([username, email]) => {
@@ -37,7 +55,6 @@ export class HeaderComponent {
         draggable: true,
         showCloseButton: true,
         title: 'User Profile',
-        color: "#FF8526",
         backdrop: ` rgba(0,0,123,0.4)  `,
         html:
           ` <div style="display: flex; flex-direction: row; align-items:center; justify-content: center;">
@@ -61,8 +78,8 @@ export class HeaderComponent {
           </div>
           `,
         showCancelButton: true,
-        confirmButtonColor: "#FF9100",
-        cancelButtonColor: "#D44000",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Save',
 
@@ -99,6 +116,68 @@ export class HeaderComponent {
         });
       });
     })
+  }
+
+  onInputChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    this.searchInput.set(value);
+
+    if (value.trim() !== "") {
+      this.searchSubject.next(value);
+    } else {
+      this.searchResults.set([]);
+    }
+  }
+
+  fetchSearchResults(searchTerm: string) {
+    this.bookService.searchBooks(searchTerm).subscribe({
+      next: (books) => {
+        this.searchResults.set(books.slice(0, 5));
+      },
+      error: () =>
+        this.searchResults.set([])
+    });
+  }
+
+  handleSearchClick() {
+    const trimmedInput = this.searchInput().trim();
+
+    if (trimmedInput && this.searchInput().length > 0) {
+      const firstBook = this.searchResults()[0];
+      if (firstBook.id) {
+        this.router.navigate(['/book-info', firstBook.id]);
+        this.searchResults.set([]);
+        this.searchInput.set('');
+      }
+    }
+  }
+
+  selectBook(book: Books) {
+    if (book.id) {
+      this.router.navigate(['/book-info', book.id]);
+      this.searchInput.set('');
+      this.searchResults.set([]);
+    }
+  }
+
+  getImageUrl(book: Books): string {
+    if (!book.image || book.image.trim() === "" || book.image === "null") {
+      return "/assets/default.jpg";
+    }
+    return book.image;
+  }
+
+  truncateTitle(title: string | undefined, maxLength: number = 50): string {
+    if (!title) return '';
+    return title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.searchResults.set([]);
+    }
   }
 
 }

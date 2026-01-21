@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { UserProfile } from '../interfaces/interfaces.js';
+import { UserProfile } from '../../interfaces/interfaces.js';
 
 export const login = createAction(
   '[Login Page] Login',
