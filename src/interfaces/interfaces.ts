@@ -6,7 +6,7 @@ export interface Books {
     image?: string;
     publishedDate?: string;
     rating?: number;
-    title?: string
+    title?: string;
     userId?: number;
 }
 
@@ -15,4 +15,9 @@ export interface UserProfile {
     username?: string; 
     email?: string; 
     titles?: string[]; 
+}
+
+export interface LikeResponse{
+    bookId: number;
+    liked: boolean;
 }

@@ -1,5 +1,5 @@
 import { createReducer, createSelector, on } from "@ngrx/store";
-import { loginSuccess, updateUsernameSuccess } from "./login-page.actions.js";
+import { loginSuccess, logout, updateUsernameSuccess } from "./login-page.actions.js";
 import { UserProfile } from "../../interfaces/interfaces.js";
 import { AppState } from "../app.state.js";
 
@@ -24,9 +24,12 @@ export const selectUsername = createSelector(selectUser, (user) => user?.usernam
 
 export const authReducer = createReducer(
     initialState,
-    on(loginSuccess, (state, { user }) =>
-        ({ ...state, user, loggedIn: true })),
-    on(updateUsernameSuccess, (state, { username }) => 
-        ({ ...state, user: { ...state.user, username } }))
+    on(loginSuccess, (state, { user }) => { 
+        console.log('Reducer loginSuccess:', user); 
+        return { ...state, user, loggedIn: true }; 
+    }),
+    on(updateUsernameSuccess, (state, { user }) => 
+        ({ ...state, user })),
+    on(logout, () => initialState)
 );
 

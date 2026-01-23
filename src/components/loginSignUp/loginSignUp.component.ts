@@ -4,7 +4,7 @@ import { UserService } from "../../services/user.service.js";
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from "../../interfaces/interfaces.js";
 import { Router } from '@angular/router';
-import { login } from "../../ngrx/login-page/login-page.actions.js";
+import { login, logout } from "../../ngrx/login-page/login-page.actions.js";
 import { Store } from "@ngrx/store";
 
 @Component({
@@ -75,6 +75,7 @@ export class LoginSignUp implements OnInit {
     const password = this.loginForm.get('password')?.value;
     if(!password) return;
 
+    this.store.dispatch(logout())
     this.store.dispatch(login({ email: emailValue, password: password }));
 
     this.userProfile.getUser(emailValue).subscribe({

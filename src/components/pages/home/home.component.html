@@ -34,7 +34,7 @@
         <div [id]="getCarouselId(genreCarousel.genre)" class="carousel slide">
             <div class="carousel-inner">
                 @for (chunk of genreCarousel.bookChunks; track $index) {
-                <div class="carousel-item" [class.active]="$index === 0">
+                <div class="carousel-item" [class.active]="$index === getActiveSlide(genreCarousel.genre)">
                     <div class="row g-3">
                         @for (book of chunk; track book.id) {
                         <div class="col-lg-2 col-md-4 col-sm-6">
@@ -73,15 +73,24 @@
             </div>
 
             @if (genreCarousel.bookChunks.length > 1) {
-            <button class="carousel-control-prev" type="button"
-                [attr.data-bs-target]="'#' + getCarouselId(genreCarousel.genre)" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </button>
-
-            <button class="carousel-control-next" type="button"
-                [attr.data-bs-target]="'#' + getCarouselId(genreCarousel.genre)" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </button>
+            <div class="carousel-controls">
+                <button class="carousel-control-prev" type="button"
+                    (click)="prevSlide(genreCarousel.genre, genreCarousel.bookChunks.length)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-left-icon lucide-chevron-left">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+                <button class="carousel-control-next" type="button"
+                    (click)="nextSlide(genreCarousel.genre, genreCarousel.bookChunks.length)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-right-icon lucide-chevron-right">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
             }
         </div>
     </div>
@@ -126,9 +135,9 @@
     <div class="contact-info">
         <div class="title">
             <hr class="contact-hr">
-            <svg style="margin-right: 7px; margin-top: 4px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-phone-icon lucide-phone">
+            <svg style="margin-right: 7px; margin-top: 4px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">
                 <path
                     d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
             </svg>
@@ -142,9 +151,9 @@
     <div class="about-info">
         <div class="title">
             <hr class="about-hr">
-            <svg style="margin-right: 7px; margin-top: 4px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-badge-info-icon lucide-badge-info">
+            <svg style="margin-right: 7px; margin-top: 4px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-badge-info-icon lucide-badge-info">
                 <path
                     d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
                 <line x1="12" x2="12" y1="16" y2="12" />
@@ -158,4 +167,24 @@
             inspires
             you.</p>
     </div>
+</div>
+<div class="nav-to-the-bottom">
+    <button class="arrow-down" (click)="goToTheBottom()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-down-icon lucide-arrow-down">
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+        </svg>
+    </button>
+</div>
+<div class="nav-to-the-top">
+    <button class="arrow-up" (click)="goToTheTop()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-up-icon lucide-arrow-up">
+            <path d="m5 12 7-7 7 7" />
+            <path d="M12 19V5" />
+        </svg>
+    </button>
 </div>

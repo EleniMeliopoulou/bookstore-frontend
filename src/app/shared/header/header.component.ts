@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
 
   cartItemCount = this.cartService.getCartItems;
 
-  username$ = this.store.select(selectUsername);
+  username$ = this.store.select(selectUsername); 
   email$ = this.store.select(selectUser).pipe(map(u => u?.email));
 
   ngOnInit(): void {
@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
 
   public profileModal() {
     combineLatest([this.username$, this.email$]).pipe(take(1)).subscribe(([username, email]) => {
+      console.log('Modal data:', username, email);
       Swal.fire({
         draggable: true,
         showCloseButton: true,

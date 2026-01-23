@@ -15,15 +15,16 @@ export const loginFailure = createAction(
   '[Auth API] Login Failure', 
   props<{ error: any }>()
 );
+export const logout = createAction('[Auth] Logout');
 
 export const updateUsername = createAction( 
   '[Profile Modal] Update User', 
   props<{ email: string; username: string }>() 
 );
 
-export const updateUsernameSuccess = createAction(
+export const updateUsernameSuccess = createAction( 
   '[User API] Update Username Success', 
-  props<{ username: string }>()
+  props<{ user: UserProfile }>() 
 );
 
 export const updateUsernameFailure = createAction(

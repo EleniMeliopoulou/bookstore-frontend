@@ -9,13 +9,15 @@ import { provideEffects } from '@ngrx/effects';
 import { authReducer } from '../ngrx/login-page/login-page.reducer.js';
 import { LoginPageEffects } from '../ngrx/login-page/login-page.effects.js';
 import { metaReducers } from './local-storage.metareducer.js';
+import { likedBooksReducer } from '../ngrx/liked-books/liked-books.reducer.js';
+import { LikedBooksEffects } from '../ngrx/liked-books/liked-books.effects.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
-    provideStore({ auth: authReducer}, { metaReducers } ), 
-    provideEffects([LoginPageEffects])
+    provideStore({ auth: authReducer, likedBooks: likedBooksReducer}, { metaReducers } ), 
+    provideEffects([LoginPageEffects, LikedBooksEffects])
   ]
 };

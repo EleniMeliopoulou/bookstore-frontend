@@ -1,12 +1,5 @@
-import { Injectable, inject, signal } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { Books } from "../interfaces/interfaces.js";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
-
-interface LikeResponse{
-    bookId: number;
-    isLiked: boolean;
-}
 
 @Injectable({
     providedIn: 'root'

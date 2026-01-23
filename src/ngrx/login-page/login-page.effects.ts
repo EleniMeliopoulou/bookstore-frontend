@@ -11,21 +11,16 @@ export class LoginPageEffects {
     private actions$ = inject(Actions)
     private authService = inject(UserService)
 
-    login$ = createEffect(() =>
-        this.actions$.pipe(
-        ofType(login),
-        mergeMap(({ email, password }) =>
-            this.authService.login(email, password).pipe(
-            mergeMap(() =>
-                this.authService.getUser(email).pipe(
-                map(user => loginSuccess({ user })),
-                catchError(error => of(loginFailure({ error })))
-                )
-            ),
-            catchError(error => of(loginFailure({ error })))
-            )
-        )
-        )
+    login$ = createEffect(() => 
+        this.actions$.pipe( 
+            ofType(login), 
+            mergeMap(({ email, password }) => 
+                this.authService.login(email, password).pipe( 
+                    map(user => loginSuccess({ user })), // ✅ ενημερώνει το store με τον σωστό user 
+                    catchError(error => of(loginFailure({ error }))) 
+                ) 
+            ) 
+        ) 
     );
 
     updateUsername$ = createEffect(() =>
@@ -35,7 +30,7 @@ export class LoginPageEffects {
             this.authService.updateUser(email, username).pipe(
             mergeMap(() =>
                 this.authService.getUser(email).pipe(
-                map(user => updateUsernameSuccess({ username })),
+                map(user => updateUsernameSuccess({ user })),
                 catchError(error => of(updateUsernameFailure({ error })))
                 )
             ),
