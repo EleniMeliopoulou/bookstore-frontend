@@ -20,6 +20,14 @@ export class CartComponent {
 
   removeFromCart(bookId: number | undefined): void {
     this.cartService.removeItem(bookId);
+    Swal.fire({
+      position: "bottom-right",
+      icon: "error",
+      title: `Removed From Cart`,
+      showConfirmButton: false,
+      timer: 2000,
+      width: 400,
+    });
   }
 
   clearCart(): void {

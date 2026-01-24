@@ -10,7 +10,9 @@ import { BookListService } from "../../../services/booklist.service.js";
 import { Store } from "@ngrx/store";
 import { selectIsBookLiked, selectLoading } from "../../../ngrx/liked-books/liked-books.reducer.js";
 import * as LikedBooksActions from '../../../ngrx/liked-books/liked-books.actions.js';
-import { Observable } from "rxjs";
+import { Observable, take } from "rxjs";
+import { selectUserId } from "../../../ngrx/login-page/login-page.reducer.js";
+import { Actions, ofType } from "@ngrx/effects";
 
 @Component({
   selector: 'app-bookInfo-component',
@@ -26,12 +28,12 @@ export class BookInfoComponent implements OnInit {
   private route = inject(ActivatedRoute);
   cartService = inject(CartService);
   bookListService = inject(BookListService);
+  actions$ = inject(Actions);
 
   //Signals
   bookData = signal<Books | null>(null);
   error = signal<string | null>(null);
   bookId = signal<number>(0);
-  userId = 1;
 
   //Computed Signals
   book = computed(() => this.bookData());
@@ -46,15 +48,19 @@ export class BookInfoComponent implements OnInit {
   // NgRx Selectors
   isLiked$!: Observable<boolean>;
   isLoadingLike$ = this.store.select(selectLoading);
+  userId$ = this.store.select(selectUserId);
 
   ngOnInit(): void {
-    this.store.dispatch(LikedBooksActions.loadLikedBooks({ userId: this.userId }));
-
+    this.userId$.pipe(
+      take(1)).subscribe(userId => {
+        if (userId) {
+          this.store.dispatch(LikedBooksActions.loadLikedBooks({ userId }));
+        }
+      });
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.bookId.set(Number(id));
-        // ΔΙΟΡΘΩΣΗ: Initialize isLiked$ με το σωστό bookId
         this.isLiked$ = this.store.select(selectIsBookLiked(Number(id)));
         this.showInfo(Number(id));
       } else {
@@ -90,35 +96,38 @@ export class BookInfoComponent implements OnInit {
   }
 
   addToBookList(book: Books) {
-    if (!book.id) return;
+    this.userId$.pipe(
+      take(1)).subscribe(userId => {
+        if (!userId || !book.id) return;
 
-    this.store.dispatch(LikedBooksActions.toggleLike({
-      userId: this.userId,
-      bookId: book.id
-    }));
+        this.store.dispatch(LikedBooksActions.toggleLike({ userId, bookId: book.id }));
 
-    this.isLiked$.subscribe(isLiked => {
-      if (isLiked) {
-        this.bookListService.addItem(book);
-        Swal.fire({
-          position: "bottom-right",
-          icon: "success",
-          title: `Added To List`,
-          showConfirmButton: false,
-          timer: 2000,
-          width: 400,
+        this.actions$.pipe(
+          ofType(LikedBooksActions.toggleLikeSuccess),
+          take(1)
+        ).subscribe(({ isLiked }) => {
+          if (isLiked) {
+            this.bookListService.addItem(book);
+            Swal.fire({
+              position: "bottom-right",
+              icon: "success",
+              title: `Added To List`,
+              showConfirmButton: false,
+              timer: 2000,
+              width: 400,
+            });
+          } else {
+            this.bookListService.removeItem(book.id);
+            Swal.fire({
+              position: "bottom-right",
+              icon: "error",
+              title: `Removed From List`,
+              showConfirmButton: false,
+              timer: 2000,
+              width: 400,
+            });
+          }
         });
-      } else {
-        this.bookListService.removeItem(book.id);
-        Swal.fire({
-          position: "bottom-right",
-          icon: "error",
-          title: `Removed From List`,
-          showConfirmButton: false,
-          timer: 2000,
-          width: 400,
-        });
-      }
-    })   
+      });
   }
 }

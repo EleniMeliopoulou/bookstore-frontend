@@ -22,6 +22,11 @@ export const selectUser = createSelector(
 
 export const selectUsername = createSelector(selectUser, (user) => user?.username);
 
+export const selectUserId = createSelector(
+    selectUser,
+    (user) => user?.id
+  );
+
 export const authReducer = createReducer(
     initialState,
     on(loginSuccess, (state, { user }) => { 

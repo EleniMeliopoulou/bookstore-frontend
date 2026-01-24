@@ -9,6 +9,10 @@ export class BookListService {
 
     getListItems = this.listItems.asReadonly();
 
+    syncWithStore(books: Books[]): void {
+        this.listItems.set(books);
+    }
+
     addItem(book: Books): void {
         const currentItems = this.listItems();
 

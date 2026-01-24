@@ -5,7 +5,7 @@
     justify-self: center;
     border-radius: 15px;
     width: 700px;
-    height: 900px;
+    height: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -21,7 +21,6 @@
         fill: rgb(157, 201, 250);
     }
 }
-
 
 .image-container{
     padding: 10px;
@@ -75,6 +74,7 @@ hr{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .btn {

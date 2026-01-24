@@ -8,6 +8,7 @@ export interface Books {
     rating?: number;
     title?: string;
     userId?: number;
+    isLiked?: boolean;
 }
 
 export interface UserProfile { 
@@ -18,6 +19,6 @@ export interface UserProfile {
 }
 
 export interface LikeResponse{
-    bookId: number;
+    book: Books;
     liked: boolean;
 }

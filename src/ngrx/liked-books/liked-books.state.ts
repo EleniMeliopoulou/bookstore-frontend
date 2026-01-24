@@ -1,11 +1,13 @@
+import { Books } from "../../interfaces/interfaces.js";
+
 export interface LikedBooksState { 
-    likedBookIds: number[]; 
+    likedBooks: Books[]; 
     loading: boolean; 
     error: any; 
 } 
 
 export const initialState: LikedBooksState = { 
-    likedBookIds: [], 
+    likedBooks: [], 
     loading: false, 
     error: null
 }

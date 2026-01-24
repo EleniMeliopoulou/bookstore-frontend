@@ -42,17 +42,13 @@ export class ForgotPasswordComponent implements OnInit {
                     draggable: true,
                     showCloseButton: true,
                     title: 'Change Password',
-                    color: "#FF8526",
-                    backdrop: ` rgba(0,0,123,0.4) 
-                                url("/assets/character.png") 
-                                left top / 200px 200px 
-                                no-repeat `,
+                    backdrop: ` rgba(0,0,123,0.4)`,
                     html:
                         ` <input type="password" id="password" class="swal2-input" placeholder="Password"> 
                     <input type="password" id="confirm" class="swal2-input" placeholder="Confirm Password"> `,
                     showCancelButton: true,
-                    confirmButtonColor: "#FF9100",
-                    cancelButtonColor: "#D44000",
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
                     cancelButtonText: 'Cancel',
                     confirmButtonText: 'Change',
 

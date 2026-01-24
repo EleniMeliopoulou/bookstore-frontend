@@ -3,7 +3,7 @@
     <div class="list-header mb-4">
         <div class="list-header-right">
             <h1>My List</h1>
-            <p class="text-muted">{{ bookListItems().length }} item</p>
+            <p class="text-muted">{{ items().length }} item</p>
         </div>
         <div class="list-header-left">
             <button class="nav-button" routerLink="/home">
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    @if (bookListItems().length === 0) {
+    @if (items().length === 0) {
     <div class="empty-list text-center py-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -27,23 +27,19 @@
         </svg>
         <h3>Your list is empty</h3>
         <p class="text-muted">Add Books</p>
-        <a routerLink="/home" class="btn btn-primary mt-3" routerLink="/home">
-            Go To Home
-        </a>
+        <a routerLink="/home" class="btn btn-primary mt-3"> Go To Home </a>
     </div>
-    }
-
-    @if (bookListItems().length > 0) {
+    } @else {
     <div class="list-items">
         <div class="row">
-            @for (item of bookListItems(); track item.id) {
+            @for (item of items(); track item.id) {
             <div class="col-md-4 mb-4">
                 <div class="list-item">
                     <div class="content text-center">
                         <img [src]="item.image" [alt]="item.title" class="img-fluid list-item-image">
                         <h5 class="mb-1 mt-2">{{ item.title }}</h5>
                         @if (item.author) {
-                        <p class="text-muted mb-0">{{item.author }}</p>
+                        <p class="text-muted mb-0">{{ item.author }}</p>
                         }
                         @if (item.rating) {
                         <div class="rating mt-2">
@@ -61,7 +57,8 @@
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
                                 <path d="M3 6h18" />
                                 <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                            </svg> Remove </button>
+                            </svg> Remove
+                        </button>
                     </div>
                 </div>
             </div>

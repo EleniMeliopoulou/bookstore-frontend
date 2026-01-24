@@ -1,17 +1,17 @@
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as LikedBooksActions from './liked-books.actions.js';
 import { LikedBooksState, initialState } from './liked-books.state.js';
+import { logout } from './liked-books.actions.js';
 
 export const selectLikedBooksState = createFeatureSelector<LikedBooksState>('likedBooks');
 
-export const selectLikedBookIds = createSelector(
+export const selectLikedBooks = createSelector(
     selectLikedBooksState,
-    state => state.likedBookIds
+    state => state.likedBooks
 );
 
 export const selectIsBookLiked = (bookId: number) => createSelector(
-    selectLikedBooksState,
-    state => state.likedBookIds.includes(bookId)
+    selectLikedBooksState, state => state.likedBooks.some(b => b.id === bookId)
 );
 
 export const selectLoading = createSelector(
@@ -31,13 +31,15 @@ export const likedBooksReducer = createReducer(
             ...state,
             loading: true
         })),
-    on(LikedBooksActions.loadLikedBooksSuccess, (state, { bookIds }) =>
-    ({
-        ...state,
-        loading: false,
-        likedBookIds: bookIds,
-        error: null
-    })),
+    on(LikedBooksActions.loadLikedBooksSuccess, (state, { books }) => {
+        console.log('Reducer received books:', books);
+        return {
+            ...state,
+            loading: false,
+            likedBooks: books,
+            error: null
+        };
+    }),
     on(LikedBooksActions.loadLikedBooksFailure, (state, { error }) =>
     ({
         ...state,
@@ -49,14 +51,17 @@ export const likedBooksReducer = createReducer(
         ...state,
         loading: true
     })),
-    on(LikedBooksActions.toggleLikeSuccess, (state, { bookId, isLiked }) => {
-        console.log("REDUCER FIRED", bookId, isLiked);
+    on(LikedBooksActions.toggleLikeSuccess, (state, { book, isLiked }) => {
+        if (!book || !book.id) {
+            console.error('Invalid book received:', book);
+            return state;
+        }
         return {
             ...state,
             loading: false,
-            likedBookIds: isLiked
-                ? [...state.likedBookIds, bookId]
-                : state.likedBookIds.filter(id => id !== bookId)
+            likedBooks: isLiked
+                ? [...state.likedBooks, book]
+                : state.likedBooks.filter(b => b.id !== book.id)
         };
     }),
     on(LikedBooksActions.toggleLikeFailure, (state, { error }) =>
@@ -64,5 +69,6 @@ export const likedBooksReducer = createReducer(
         ...state,
         loading: false,
         error
-    }))
+    })),
+    on(logout, () => initialState)
 );

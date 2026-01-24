@@ -16,15 +16,9 @@ export class LikedBookService {
         return this.http.get<Books[]>(`${this.apiUrl}/liked-books`, { params });
     }
 
-    getLikedBookIds(userId: number): Observable<number[]> {
-        return this.http.get<number[]>(`${this.apiUrl}/liked-book-ids`, {
-            params: { userId }
-        });
-    }
-
     toggleLike(userId: number, bookId: number): Observable<LikeResponse> {
         return this.http.post<LikeResponse>(`${this.apiUrl}/toggle-like`, null, {
-            params: { userId, bookId }
+            params: { userId: userId.toString(), bookId: bookId.toString() }
         });
     }
 }
