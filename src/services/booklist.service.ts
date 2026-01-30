@@ -30,16 +30,16 @@ export class BookListService {
         }
     }
 
-    removeItem(bookId: number | undefined): void {
+    removeItem(bookId: number): void {
         const currentItems = this.listItems();
         this.listItems.set(currentItems.filter(item => item.id !== bookId))
     }
 
-    clearList(): void{
+    clearList(): void {
         this.listItems.set([]);
     }
 
-    getItemCount(): number{
+    getItemCount(): number {
         return this.listItems().length;
     }
 

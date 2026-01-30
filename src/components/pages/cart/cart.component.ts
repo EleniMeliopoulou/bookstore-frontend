@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { HeaderComponent } from "../../../app/shared/header/header.component.js";
 import { CartService } from "../../../services/cart.service.js";
 import { RouterLink } from "@angular/router";
@@ -18,8 +18,8 @@ export class CartComponent {
 
   cartItems = this.cartService.getCartItems;
 
-  removeFromCart(bookId: number | undefined): void {
-    this.cartService.removeItem(bookId);
+  removeFromCart(bookId: number): void {
+    this.cartService.removeItem(bookId!);
     Swal.fire({
       position: "bottom-right",
       icon: "error",
@@ -39,6 +39,7 @@ export class CartComponent {
       title: "Are you sure you want to proceed with your order?",
       text: "You won't be able to revert this!",
       icon: "warning",
+      showCloseButton: true,
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",

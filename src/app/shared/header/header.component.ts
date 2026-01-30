@@ -1,9 +1,9 @@
-import { Component, ElementRef, HostListener, OnInit, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { selectUser, selectUsername } from '../../../ngrx/login-page/login-page.reducer.js';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../services/user.service.js';
 import { Subject, combineLatest, debounceTime, map, take } from 'rxjs';
@@ -24,7 +24,7 @@ import { Books } from '../../../interfaces/interfaces.js';
 export class HeaderComponent implements OnInit {
   //Injects
   store = inject(Store);
-  userProfile = inject(UserService);
+  userService = inject(UserService);
   cartService = inject(CartService);
   bookService = inject(BookService);
   elementRef = inject(ElementRef);
@@ -38,22 +38,22 @@ export class HeaderComponent implements OnInit {
 
   cartItemCount = this.cartService.getCartItems;
 
-  username$ = this.store.select(selectUsername); 
+  username$ = this.store.select(selectUsername);
   email$ = this.store.select(selectUser).pipe(map(u => u?.email));
 
   ngOnInit(): void {
-
     this.searchSubject.pipe(
       debounceTime(1000)
     ).subscribe(searchTerm => this.fetchSearchResults(searchTerm))
   }
 
-
+  /**
+   * Update user profile modal (the user can change their username)
+   */
   public profileModal() {
     combineLatest([this.username$, this.email$]).pipe(take(1)).subscribe(([username, email]) => {
       console.log('Modal data:', username, email);
       Swal.fire({
-        draggable: true,
         showCloseButton: true,
         title: 'User Profile',
         backdrop: ` rgba(0,0,123,0.4)  `,
@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit {
             return false;
           }
 
-          return firstValueFrom(this.userProfile.updateUser(email!, username))
+          return firstValueFrom(this.userService.updateUser(email!, username))
             .catch(err => {
               Swal.showValidationMessage("Update failed.");
               throw err;
@@ -131,6 +131,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetch books according to the search input
+   * @param searchTerm 
+   */
   fetchSearchResults(searchTerm: string) {
     this.bookService.searchBooks(searchTerm).subscribe({
       next: (books) => {
@@ -141,6 +145,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Search icon functionallity (the user navigates to the first book info page)
+   */
   handleSearchClick() {
     const trimmedInput = this.searchInput().trim();
 
@@ -154,6 +161,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * The user selectes the book he wants from the dropdown and navigates to the book info page
+   * @param book 
+   */
   selectBook(book: Books) {
     if (book.id) {
       this.router.navigate(['/book-info', book.id]);
@@ -162,6 +173,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * Fallback for the image
+   * @param book 
+   * @returns 
+   */
   getImageUrl(book: Books): string {
     if (!book.image || book.image.trim() === "" || book.image === "null") {
       return "/assets/default.jpg";
@@ -169,11 +185,21 @@ export class HeaderComponent implements OnInit {
     return book.image;
   }
 
+  /**
+   * Slicing of book titles
+   * @param title 
+   * @param maxLength 
+   * @returns 
+   */
   truncateTitle(title: string | undefined, maxLength: number = 50): string {
     if (!title) return '';
     return title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
   }
 
+  /**
+   * Close dropdown when clicking outside
+   * @param event 
+   */
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     if (!this.elementRef.nativeElement.contains(event.target)) {

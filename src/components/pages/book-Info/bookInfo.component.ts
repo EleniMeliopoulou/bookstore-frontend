@@ -8,7 +8,7 @@ import { CartService } from "../../../services/cart.service.js";
 import Swal from "sweetalert2";
 import { BookListService } from "../../../services/booklist.service.js";
 import { Store } from "@ngrx/store";
-import { selectIsBookLiked, selectLoading } from "../../../ngrx/liked-books/liked-books.reducer.js";
+import { selectIsBookLiked, selectLoading } from "../../../ngrx/liked-books/liked-books.selectors.js";
 import * as LikedBooksActions from '../../../ngrx/liked-books/liked-books.actions.js';
 import { Observable, take } from "rxjs";
 import { selectUserId } from "../../../ngrx/login-page/login-page.reducer.js";
@@ -23,16 +23,15 @@ import { Actions, ofType } from "@ngrx/effects";
 })
 export class BookInfoComponent implements OnInit {
   //Injects
-  private store = inject(Store);
+  store = inject(Store);
   bookService = inject(BookService)
-  private route = inject(ActivatedRoute);
+  route = inject(ActivatedRoute);
   cartService = inject(CartService);
   bookListService = inject(BookListService);
   actions$ = inject(Actions);
 
   //Signals
   bookData = signal<Books | null>(null);
-  error = signal<string | null>(null);
   bookId = signal<number>(0);
 
   //Computed Signals
@@ -57,6 +56,7 @@ export class BookInfoComponent implements OnInit {
           this.store.dispatch(LikedBooksActions.loadLikedBooks({ userId }));
         }
       });
+    //Take book id from URL (book-info/:id)
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -64,11 +64,15 @@ export class BookInfoComponent implements OnInit {
         this.isLiked$ = this.store.select(selectIsBookLiked(Number(id)));
         this.showInfo(Number(id));
       } else {
-        this.error.set('Δεν βρέθηκε ID βιβλίου');
+        console.log('No book with this ID found');
       }
     });
   }
 
+  /**
+   * Show the book info
+   * @param id 
+   */
   showInfo(id: number) {
     this.bookService.getBook(id).subscribe({
       next: (book) => {
@@ -77,11 +81,14 @@ export class BookInfoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error finding book:', err);
-        this.error.set('Error finding book');
       }
     })
   }
 
+  /**
+   * Add the book to the cart
+   * @param book 
+   */
   addToCart(book: Books) {
     console.log('Adding to cart:', book);
     this.cartService.addItem(book);
@@ -95,6 +102,10 @@ export class BookInfoComponent implements OnInit {
     });
   }
 
+  /**
+   * Add the book to the liked books list
+   * @param book 
+   */
   addToBookList(book: Books) {
     this.userId$.pipe(
       take(1)).subscribe(userId => {
@@ -117,7 +128,7 @@ export class BookInfoComponent implements OnInit {
               width: 400,
             });
           } else {
-            this.bookListService.removeItem(book.id);
+            this.bookListService.removeItem(book.id!);
             Swal.fire({
               position: "bottom-right",
               icon: "error",

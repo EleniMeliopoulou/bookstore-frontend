@@ -1,4 +1,4 @@
-import { catchError, map, of, switchMap, tap } from "rxjs";
+import { catchError, map, of, switchMap } from "rxjs";
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { LikedBookService } from "../../services/liked-books.service.js";
@@ -28,7 +28,6 @@ export class LikedBooksEffects {
             ofType(LikedBooksActions.toggleLike),
             switchMap(({ userId, bookId }) =>
                 this.likedBooksService.toggleLike(userId, bookId).pipe(
-                    tap(response => console.log("TOGGLE RESPONSE:", response)),
                     map((response: LikeResponse) => LikedBooksActions.toggleLikeSuccess({ book: response.book, isLiked: response.liked })),
                     catchError(error => of(LikedBooksActions.toggleLikeFailure({ error }))
                     )

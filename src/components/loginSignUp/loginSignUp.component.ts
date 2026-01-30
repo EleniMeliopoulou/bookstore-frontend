@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from "../../services/user.service.js";
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from "../../interfaces/interfaces.js";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { login, logout } from "../../ngrx/login-page/login-page.actions.js";
 import { Store } from "@ngrx/store";
 
 @Component({
   selector: 'app-login-signup',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './loginSignUp.component.html',
   styleUrl: './loginSignUp.component.css'
 })
@@ -22,11 +22,12 @@ export class LoginSignUp implements OnInit {
   message = signal('');
 
   //Injects
-  userProfile = inject(UserService);
+  userService = inject(UserService);
   fb = inject(FormBuilder);
   router = inject(Router);
   store = inject(Store);
 
+  //FormGroups
   signUpForm!: FormGroup;
   loginForm!: FormGroup;
 
@@ -42,6 +43,9 @@ export class LoginSignUp implements OnInit {
     });
   }
 
+  /**
+   * Show login form
+   */
   public showLogin() {
     this.isLogin.set(true);
     this.isSignUp.set(false);
@@ -50,6 +54,9 @@ export class LoginSignUp implements OnInit {
     this.signUpForm.reset();
   }
 
+  /**
+   * Show sign up form
+   */
   public showSignUp() {
     this.isLogin.set(false);
     this.isSignUp.set(true);
@@ -58,10 +65,10 @@ export class LoginSignUp implements OnInit {
     this.loginForm.reset();
   }
 
-  public forgotPasswordModal() {
-    this.router.navigate(['/forgot-password']);
-  }
-
+  /**
+   * Login submit button functionality
+   * @returns 
+   */
   public userLogin() {
     this.loginForm.markAllAsTouched();
     this.loginForm.get('email')?.markAsDirty();
@@ -73,12 +80,12 @@ export class LoginSignUp implements OnInit {
     const emailValue = this.loginForm.get('email')?.value;
     if (!emailValue) return;
     const password = this.loginForm.get('password')?.value;
-    if(!password) return;
+    if (!password) return;
 
     this.store.dispatch(logout())
     this.store.dispatch(login({ email: emailValue, password: password }));
 
-    this.userProfile.getUser(emailValue).subscribe({
+    this.userService.getUser(emailValue).subscribe({
       next: (user) => {
         console.log("User found:", user);
         this.loginForm.reset();
@@ -90,13 +97,10 @@ export class LoginSignUp implements OnInit {
     });
   }
 
+  /**
+   * Sign Up submit button functionality
+   */
   public userSignUp() {
-    if (this.signUpForm.invalid) {
-      this.signUpForm.markAllAsTouched();
-      this.message.set("Please fill all fields");
-      return;
-    }
-
     this.signUpForm.markAllAsTouched();
     this.signUpForm.get('username')?.markAsDirty();
     this.signUpForm.get('email')?.markAsDirty();
@@ -105,7 +109,7 @@ export class LoginSignUp implements OnInit {
 
     const newUser: UserProfile = this.signUpForm.value;
 
-    this.userProfile.createUser(newUser).subscribe({
+    this.userService.createUser(newUser).subscribe({
       next: (user) => {
         console.log("User created:", user);
         this.signUpForm.reset();

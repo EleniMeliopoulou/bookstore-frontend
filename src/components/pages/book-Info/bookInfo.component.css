@@ -1,4 +1,4 @@
-.info-container{
+.info-container {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -9,20 +9,20 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.header{
+.header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.arrow-container{
-    svg:hover{
+.arrow-container {
+    svg:hover {
         fill: rgb(157, 201, 250);
     }
 }
 
-.image-container{
+.image-container {
     padding: 10px;
     margin: 10px;
     border: 2px solid orange;
@@ -33,44 +33,47 @@
     justify-content: center;
 }
 
-.more-info-container{
+.more-info-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 180px;
     width: 330px;
     margin-top: 40px;
     margin-bottom: 30px;
+    margin-left: 10px;
 }
 
-.book-title{
+.book-title {
     text-decoration: underline;
     font-style: oblique;
 }
 
-.more-info{
+.more-info {
     margin-top: 5px;
     font-style: oblique;
 }
 
-.description-container{
-    display: flex;
-    flex-direction: column;
+.description-container {
     margin: 20px;
 }
 
-.description{
+.description {
     font-style: italic;
 }
 
-hr{
+hr {
+    padding: 2px;
+    margin: 0;
+}
+
+.divider {
+    margin-top: 70px;
     margin-left: 10px;
     width: 680px;
     border-top: 5px dashed blue;
 }
 
-.btn-container{
+.btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,15 +84,14 @@ hr{
     width: 200px;
 }
 
-.like-button{
+.like-button {
     margin-left: 20px;
     border: none;
     background-color: transparent;
     cursor: context-menu;
 }
 
-svg:hover{
+svg:hover {
     fill: red;
     cursor: pointer;
 }
-

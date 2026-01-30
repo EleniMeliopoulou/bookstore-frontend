@@ -12,19 +12,25 @@ import { Router } from "@angular/router";
     styleUrl: './forgotPassword.component.css'
 })
 export class ForgotPasswordComponent implements OnInit {
+    //Signals
     message = signal('');
 
+    //Injects
     fb = inject(FormBuilder);
-    userProfile = inject(UserService);
+    userService = inject(UserService);
     router = inject(Router);
 
+    //Form Groups
     forgotPasswordForm!: FormGroup;
 
     ngOnInit(): void {
         this.forgotPasswordForm = this.fb.group({ email: ['', [Validators.required, Validators.email]] })
     }
 
-
+    /**
+     * Change Password submit button functionallity
+     * @returns 
+     */
     public forgotPasswordModal() {
         this.forgotPasswordForm.markAllAsTouched();
         this.forgotPasswordForm.get('email')?.markAsDirty();
@@ -35,11 +41,10 @@ export class ForgotPasswordComponent implements OnInit {
         const emailValue = this.forgotPasswordForm.get('email')?.value;
         if (!emailValue) return;
 
-        this.userProfile.getUser(emailValue).subscribe({
+        this.userService.getUser(emailValue).subscribe({
             next: () => {
                 this.message.set('');
                 Swal.fire({
-                    draggable: true,
                     showCloseButton: true,
                     title: 'Change Password',
                     backdrop: ` rgba(0,0,123,0.4)`,
@@ -66,7 +71,7 @@ export class ForgotPasswordComponent implements OnInit {
                         }
 
                         // Return a promise so SweetAlert waits for the HTTP call 
-                        return this.userProfile.changePassword(emailValue, password).toPromise();
+                        return this.userService.changePassword(emailValue, password).toPromise();
                     }
                 }).then((result) => {
 
@@ -77,13 +82,13 @@ export class ForgotPasswordComponent implements OnInit {
                         icon: "success",
                         title: "Your password has changed successfully",
                         showConfirmButton: false,
-                        timer: 3000,
+                        timer: 2000,
                         width: 400,
                     });
 
                     setTimeout(() => {
                         this.router.navigate(['']);
-                    }, 3500);
+                    }, 1500);
                 });
 
             },

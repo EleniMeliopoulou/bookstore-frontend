@@ -3,21 +3,21 @@ import { loginSuccess, logout, updateUsernameSuccess } from "./login-page.action
 import { UserProfile } from "../../interfaces/interfaces.js";
 import { AppState } from "../app.state.js";
 
-export interface AuthState {
+export interface LoginState {
     user: UserProfile | null;
     loggedIn: boolean;
 }
 
-export const initialState: AuthState = {
+export const initialState: LoginState = {
     user: null,
     loggedIn: false
 };
 
-export const selectAuthState = (state: AppState) => state.auth;
+export const selectLoginState = (state: AppState) => state.auth;
 
 export const selectUser = createSelector(
-    selectAuthState,
-    (state: AuthState) => state.user
+    selectLoginState,
+    (state: LoginState) => state.user
 );
 
 export const selectUsername = createSelector(selectUser, (user) => user?.username);
@@ -25,15 +25,15 @@ export const selectUsername = createSelector(selectUser, (user) => user?.usernam
 export const selectUserId = createSelector(
     selectUser,
     (user) => user?.id
-  );
+);
 
-export const authReducer = createReducer(
+export const loginReducer = createReducer(
     initialState,
-    on(loginSuccess, (state, { user }) => { 
-        console.log('Reducer loginSuccess:', user); 
-        return { ...state, user, loggedIn: true }; 
+    on(loginSuccess, (state, { user }) => {
+        console.log('Reducer loginSuccess:', user);
+        return { ...state, user, loggedIn: true };
     }),
-    on(updateUsernameSuccess, (state, { user }) => 
+    on(updateUsernameSuccess, (state, { user }) =>
         ({ ...state, user })),
     on(logout, () => initialState)
 );

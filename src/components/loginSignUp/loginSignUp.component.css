@@ -1,6 +1,6 @@
 .body {
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
     align-items: start;
 }
 
@@ -9,12 +9,12 @@
         justify-self: center;
     }
 
-    .right-side { 
-        justify-self: center; 
-        margin-top: 50px; 
+    .right-side {
+        justify-self: center;
+        margin-top: 50px;
     }
-  }
-  
+}
+
 
 .container {
     display: flex;
@@ -23,7 +23,6 @@
     margin-left: 150px;
     width: 550px;
     height: 570px;
-    padding-bottom: 30px;
     border-radius: 15px;
     box-shadow: 5px 10px 8px #888888;
 }
@@ -32,7 +31,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
     width: 100%;
     margin-top: 30px;
 }
@@ -45,7 +43,7 @@
 }
 
 .inputs {
-    margin-top: 55px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
 }
@@ -74,9 +72,9 @@
     margin-left: 35px;
 }
 
-.field-input:focus { 
-    border: 2px solid orange; 
-    background-color: #fff7f0; 
+.field-input:focus {
+    border: 2px solid orange;
+    background-color: #fff7f0;
 }
 
 svg {
@@ -191,28 +189,28 @@ svg {
 
 .error {
     display: none;
-    color: red; 
+    color: red;
     margin-left: 50px;
     font-size: 12px;
     width: 150px;
 }
 
-.login-form.submitted .field-input.ng-invalid.ng-touched ~ .required { 
+.login-form.submitted .field-input.ng-invalid.ng-touched~.required {
     display: flex;
     margin-top: 5px;
-} 
+}
 
-.login-form.submitted .field-input.ng-invalid.ng-touched { 
+.login-form.submitted .field-input.ng-invalid.ng-touched {
     border: 2px solid rgb(251, 65, 65) !important;
-    background-color: rgb(248, 194, 194) !important; 
-} 
+    background-color: rgb(248, 194, 194) !important;
+}
 
-.signUp-form.submitted .field-input.ng-invalid.ng-touched ~ .required { 
+.signUp-form.submitted .field-input.ng-invalid.ng-touched~.required {
     display: flex;
     margin-top: 5px;
-} 
+}
 
-.signUp-form.submitted .field-input.ng-invalid.ng-touched { 
+.signUp-form.submitted .field-input.ng-invalid.ng-touched {
     border: 2px solid rgb(251, 65, 65) !important;
-    background-color: rgb(248, 194, 194) !important; 
-} 
+    background-color: rgb(248, 194, 194) !important;
+}

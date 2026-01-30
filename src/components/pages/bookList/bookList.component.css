@@ -1,5 +1,5 @@
 .list-header {
-    border-bottom: 2px solid #dee2e6;
+    border-bottom: 2px solid #0061c1;
     padding-bottom: 1rem;
     display: grid;
     grid-template-columns: auto 150px
@@ -11,13 +11,13 @@
     color: #333;
 }
 
-.list-header-left{
+.list-header-left {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.nav-button{
+.nav-button {
     background-color: rgb(255, 214, 125);
     border-radius: 5px;
     border: none;
@@ -87,34 +87,4 @@
     padding: 1.5rem;
     border-radius: 12px;
     margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-    .list-item .col-md-4 {
-        margin-top: 1rem;
-        text-align: left !important;
-    }
-}
-
-.btn-success span {
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-
-.btn-success span:after {
-    content: '\00ab';
-    position: absolute;
-    opacity: 0;
-    left: -100px;
-    transition: 0.5s;
-}
-
-.btn-success:hover span {
-    padding-left: 25px;
-}
-
-.btn-success:hover span:after {
-    opacity: 1;
-    left: 0;
 }

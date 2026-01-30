@@ -47,7 +47,7 @@
                             <span>{{ item.rating }}</span>
                         </div>
                         }
-                        <button class="btn btn-danger btn-sm mt-3" (click)="removeFromList(item.id)">
+                        <button class="btn btn-danger btn-sm mt-3" (click)="removeFromList(item.id!)">
                             <svg style="margin-right: 2px;" xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round"
@@ -63,9 +63,6 @@
                 </div>
             </div>
             }
-        </div>
-        <div class="list-actions mt-4 d-flex justify-content-between">
-            <button class="btn btn-outline-secondary" (click)="clearList()"> Clear List </button>
         </div>
     </div>
     }

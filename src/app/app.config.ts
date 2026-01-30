@@ -6,7 +6,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes.js';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { authReducer } from '../ngrx/login-page/login-page.reducer.js';
+import { loginReducer } from '../ngrx/login-page/login-page.reducer.js';
 import { LoginPageEffects } from '../ngrx/login-page/login-page.effects.js';
 import { metaReducers } from './local-storage.metareducer.js';
 import { likedBooksReducer } from '../ngrx/liked-books/liked-books.reducer.js';
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
-    provideStore({ auth: authReducer, likedBooks: likedBooksReducer}, { metaReducers } ), 
+    provideStore({ auth: loginReducer, likedBooks: likedBooksReducer }, { metaReducers }),
     provideEffects([LoginPageEffects, LikedBooksEffects])
   ]
 };

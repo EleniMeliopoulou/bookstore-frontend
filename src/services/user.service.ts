@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable } from "rxjs";
 import { UserProfile } from "../interfaces/interfaces.js";
 
 @Injectable({
@@ -21,21 +21,17 @@ export class UserService {
     }
 
     getUser(email: string): Observable<UserProfile> {
-        return this.http.get<UserProfile>(`${this.apiUrl}/getuserbyemail?email=${email}`).pipe(
-            catchError((error) => { return throwError(() => error); })
-        );
+        return this.http.get<UserProfile>(`${this.apiUrl}/getuserbyemail`, {
+            params: { email }
+        })
     }
 
     createUser(newUser: UserProfile): Observable<UserProfile> {
-        return this.http.post<UserProfile>(`${this.apiUrl}/createuser`, newUser).pipe(
-            catchError((error) => {
-                throw error.message;
-            })
-        );
+        return this.http.post<UserProfile>(`${this.apiUrl}/createuser`, newUser)
     }
 
     updateUser(email: string, username: string) {
         return this.http.put<{ email: string, username: string }>(`${this.apiUrl}/updateuser`,
-            { email, username }).pipe( catchError(err => throwError(() => err)));
+            { email, username })
     }
 }

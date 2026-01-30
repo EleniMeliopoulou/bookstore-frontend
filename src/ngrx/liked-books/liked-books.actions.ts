@@ -6,9 +6,9 @@ export const loadLikedBooks = createAction(
   props<{ userId: number }>()
 );
 
-export const loadLikedBooksSuccess = createAction( 
-  '[Liked Books] Load Liked Books Success', 
-  props<{ books: Books[] }>() 
+export const loadLikedBooksSuccess = createAction(
+  '[Liked Books] Load Liked Books Success',
+  props<{ books: Books[] }>()
 );
 
 export const loadLikedBooksFailure = createAction(
@@ -30,4 +30,5 @@ export const toggleLikeFailure = createAction(
   '[Liked Books] Toggle Like Failure',
   props<{ error: any }>()
 );
+
 export const logout = createAction('[Auth] Logout');

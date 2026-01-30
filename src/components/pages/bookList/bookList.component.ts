@@ -1,12 +1,12 @@
-import { AsyncPipe, CommonModule } from "@angular/common";
-import { Component, OnInit, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Component, inject } from "@angular/core";
 import { HeaderComponent } from "../../../app/shared/header/header.component.js";
 import * as LikedBooksActions from '../../../ngrx/liked-books/liked-books.actions.js';
 import { RouterLink } from "@angular/router";
 import { BookListService } from "../../../services/booklist.service.js";
 import { Store } from "@ngrx/store";
 import { selectUserId } from "../../../ngrx/login-page/login-page.reducer.js";
-import { selectLikedBooks } from "../../../ngrx/liked-books/liked-books.reducer.js";
+import { selectLikedBooks } from "../../../ngrx/liked-books/liked-books.selectors.js";
 import { take } from "rxjs";
 import { Actions, ofType } from "@ngrx/effects";
 import Swal from "sweetalert2";
@@ -22,10 +22,10 @@ export class BookListComponent {
   //Injects
   bookListService = inject(BookListService);
   store = inject(Store);
-  private actions$ = inject(Actions);
+  actions$ = inject(Actions);
 
   userId$ = this.store.select(selectUserId);
-  likedBooks$ = this.store.select(selectLikedBooks);  
+  likedBooks$ = this.store.select(selectLikedBooks);
 
   items = this.bookListService.getListItems;
 
@@ -36,25 +36,31 @@ export class BookListComponent {
       }
     });
 
+    //Load liked books from state
     this.likedBooks$.subscribe(likedBooks => {
       console.log('Liked books updated:', likedBooks);
       this.bookListService.syncWithStore(likedBooks);
     });
   }
 
-  removeFromList(bookId: number | undefined): void {
+  /**
+   * Remove book from list and update state
+   * @param bookId 
+   * @returns 
+   */
+  removeFromList(bookId: number): void {
     if (!bookId) return;
 
     this.userId$.pipe(take(1)).subscribe(userId => {
       if (!userId) return;
-      
+
       this.store.dispatch(LikedBooksActions.toggleLike({ userId, bookId }));
 
       this.actions$.pipe(
         ofType(LikedBooksActions.toggleLikeSuccess),
         take(1)
       ).subscribe(({ isLiked }) => {
-        if (!isLiked) {  
+        if (!isLiked) {
           Swal.fire({
             position: "bottom-right",
             icon: "error",
@@ -66,10 +72,6 @@ export class BookListComponent {
         }
       });
     });
-  }
-
-  clearList(): void {
-    this.bookListService.clearList();
   }
 
 }

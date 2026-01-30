@@ -1,3 +1,3 @@
-import { AuthState } from "./login-page/login-page.reducer.js";
+import { LoginState } from "./login-page/login-page.reducer.js";
 
-export interface AppState { auth: AuthState; }
+export interface AppState { auth: LoginState; }

@@ -1,8 +1,7 @@
-import { catchError, map, mergeMap, of, tap } from "rxjs";
+import { catchError, map, mergeMap, of } from "rxjs";
 import { UserService } from "../../services/user.service.js";
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { login, loginFailure, loginSuccess, updateUsername, updateUsernameFailure, updateUsernameSuccess } from "./login-page.actions.js";
 import * as LoginActions from './login-page.actions.js';
 import * as LikedBooksActions from '../liked-books/liked-books.actions.js';
 
@@ -10,44 +9,43 @@ import * as LikedBooksActions from '../liked-books/liked-books.actions.js';
 export class LoginPageEffects {
 
     private actions$ = inject(Actions)
-    private authService = inject(UserService)
+    private userService = inject(UserService)
 
-    login$ = createEffect(() => 
-        this.actions$.pipe( 
-            ofType(login), 
-            mergeMap(({ email, password }) => 
-                this.authService.login(email, password).pipe( 
-                    map(user => loginSuccess({ user })), // ✅ ενημερώνει το store με τον σωστό user 
-                    catchError(error => of(loginFailure({ error }))) 
-                ) 
-            ) 
-        ) 
+    login$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(LoginActions.login),
+            mergeMap(({ email, password }) =>
+                this.userService.login(email, password).pipe(
+                    map(user => LoginActions.loginSuccess({ user })),
+                    catchError(error => of(LoginActions.loginFailure({ error })))
+                )
+            )
+        )
     );
 
-    loadLikedBooksOnLogin$ = createEffect(() => 
-        this.actions$.pipe( 
-            ofType(LoginActions.loginSuccess), 
-            map(({ user }) => LikedBooksActions.loadLikedBooks({ userId: user.id! })) 
-        ) 
+    loadLikedBooksOnLogin$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(LoginActions.loginSuccess),
+            map(({ user }) => LikedBooksActions.loadLikedBooks({ userId: user.id! }))
+        )
     );
 
     updateUsername$ = createEffect(() =>
         this.actions$.pipe(
-        ofType(updateUsername),
-        mergeMap(({ email, username }) =>
-            this.authService.updateUser(email, username).pipe(
-            mergeMap(() =>
-                this.authService.getUser(email).pipe(
-                map(user => updateUsernameSuccess({ user })),
-                catchError(error => of(updateUsernameFailure({ error })))
+            ofType(LoginActions.updateUsername),
+            mergeMap(({ email, username }) =>
+                this.userService.updateUser(email, username).pipe(
+                    mergeMap(() =>
+                        this.userService.getUser(email).pipe(
+                            map(user => LoginActions.updateUsernameSuccess({ user })),
+                            catchError(error => of(LoginActions.updateUsernameFailure({ error })))
+                        )
+                    ),
+                    catchError(error => of(LoginActions.updateUsernameFailure({ error })))
                 )
-            ),
-            catchError(error => of(updateUsernameFailure({ error })))
             )
-        )
         )
     );
 }
 
-  
-  
+

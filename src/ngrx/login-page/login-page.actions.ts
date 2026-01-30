@@ -12,22 +12,23 @@ export const loginSuccess = createAction(
 );
 
 export const loginFailure = createAction(
-  '[Auth API] Login Failure', 
+  '[Auth API] Login Failure',
   props<{ error: any }>()
 );
+
 export const logout = createAction('[Auth] Logout');
 
-export const updateUsername = createAction( 
-  '[Profile Modal] Update User', 
-  props<{ email: string; username: string }>() 
+export const updateUsername = createAction(
+  '[Profile Modal] Update User',
+  props<{ email: string; username: string }>()
 );
 
-export const updateUsernameSuccess = createAction( 
-  '[User API] Update Username Success', 
-  props<{ user: UserProfile }>() 
+export const updateUsernameSuccess = createAction(
+  '[User API] Update Username Success',
+  props<{ user: UserProfile }>()
 );
 
 export const updateUsernameFailure = createAction(
-  '[User API] Update Username Failure', 
+  '[User API] Update Username Failure',
   props<{ error: any }>()
 );

@@ -23,8 +23,10 @@
   right: 10px;
 }
 
-.header-right button, .header-left button { 
-  position: relative; z-index: 100; 
+.header-right button,
+.header-left button {
+  position: relative;
+  z-index: 100;
 }
 
 .logoutButton {
@@ -260,7 +262,7 @@ hr {
   }
 }
 
-/* Αν ο αριθμός είναι > 9, κάνε το badge λίγο μεγαλύτερο */
+/* If cart items > 9, make badge bigger */
 .cart-badge:has(+ :where([data-count="10"], [data-count="99"])) {
   width: 24px;
   border-radius: 12px;

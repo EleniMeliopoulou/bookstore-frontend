@@ -1,7 +1,6 @@
 import { Component, OnInit, inject, signal } from "@angular/core";
 import { HeaderComponent } from "../../../app/shared/header/header.component.js";
 import { BookService } from "../../../services/book.service.js";
-import { map } from "rxjs";
 import { Books } from "../../../interfaces/interfaces.js";
 import { CommonModule } from "@angular/common";
 import { CartService } from "../../../services/cart.service.js";
@@ -40,6 +39,11 @@ export class HomeComponent implements OnInit {
     this.showBooks();
   }
 
+  /**
+   * Fetches books from backend, categorizes them by genre and creates carousels.
+   * Each carousel contains multiple slides,
+   * where each slide is a chunk of books (e.g., 6 books per slide).
+   */
   showBooks() {
     this.isLoading.set(true);
 
@@ -55,7 +59,7 @@ export class HomeComponent implements OnInit {
               genreMap.set(genre, []);
             }
             const title = book.title!;
-            const truncateTitle = title.slice(0,20) + "...";
+            const truncateTitle = title.slice(0, 20) + "...";
             genreMap.get(genre)!.push({
               id: book.id,
               author: book.author,
@@ -89,6 +93,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Goes to the next slide of the carousel
+   * @param genre 
+   * @param totalChunks 
+   */
   nextSlide(genre: string, totalChunks: number) {
     const current = this.activeSlides().get(genre) || 0;
     const next = (current + 1) % totalChunks;
@@ -97,6 +106,11 @@ export class HomeComponent implements OnInit {
     this.activeSlides.set(newMap);
   }
 
+  /**
+   * Goes to the previous slide of the carousel
+   * @param genre 
+   * @param totalChunks 
+   */
   prevSlide(genre: string, totalChunks: number) {
     const current = this.activeSlides().get(genre) || 0;
     const prev = current === 0 ? totalChunks - 1 : current - 1;
@@ -109,6 +123,10 @@ export class HomeComponent implements OnInit {
     return this.activeSlides().get(genre) || 0;
   }
 
+  /**
+   * Adds the book to the cart
+   * @param book 
+   */
   addToCart(book: Books) {
     console.log('Adding to cart:', book);
     this.cartService.addItem(book);
@@ -122,6 +140,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Updates the carousels that are displayed in the page we are currently on
+   */
   updateDisplayedCarousels() {
     const startIndex = (this.currentPage() - 1) * this.carouselsPerPage;
     const endIndex = startIndex + this.carouselsPerPage;
@@ -140,7 +161,7 @@ export class HomeComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  goToTheBottom(){
+  goToTheBottom() {
     window.scrollTo({ top: 11000, behavior: 'smooth' });
   }
 
@@ -170,6 +191,12 @@ export class HomeComponent implements OnInit {
     return pages;
   }
 
+  /**
+   * Splits an array into smaller sub‑arrays (chunks) of a specified size.
+   * @param array
+   * @param size 
+   * @returns 
+   */
   chunkArray<T>(array: T[], size: number): T[][] {
     const chunks: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
@@ -178,12 +205,14 @@ export class HomeComponent implements OnInit {
     return chunks;
   }
 
+  /**
+   * Creates an id for every carousel genre. For CSS purposes
+   * @param genre 
+   * @returns 
+   */
   getCarouselId(genre: string): string {
     return `carousel-${genre.replace(/\s+/g, '-').toLowerCase()}`;
   }
-
- 
-
 }
 
 

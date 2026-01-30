@@ -1,7 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { Observable } from "rxjs";
 import { Books } from "../interfaces/interfaces.js";
-import { sign } from "crypto";
 
 @Injectable({
     providedIn: 'root'
@@ -29,16 +27,16 @@ export class CartService {
         }
     }
 
-    removeItem(bookId: number | undefined): void {
+    removeItem(bookId: number): void {
         const currentItems = this.cartItems();
         this.cartItems.set(currentItems.filter(item => item.id !== bookId))
     }
 
-    clearCart(): void{
+    clearCart(): void {
         this.cartItems.set([]);
     }
 
-    getItemCount(): number{
+    getItemCount(): number {
         return this.cartItems().length;
     }
 

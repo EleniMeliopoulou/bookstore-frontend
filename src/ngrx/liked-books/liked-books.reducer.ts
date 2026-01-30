@@ -1,28 +1,7 @@
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as LikedBooksActions from './liked-books.actions.js';
-import { LikedBooksState, initialState } from './liked-books.state.js';
+import { initialState } from './liked-books.state.js';
 import { logout } from './liked-books.actions.js';
-
-export const selectLikedBooksState = createFeatureSelector<LikedBooksState>('likedBooks');
-
-export const selectLikedBooks = createSelector(
-    selectLikedBooksState,
-    state => state.likedBooks
-);
-
-export const selectIsBookLiked = (bookId: number) => createSelector(
-    selectLikedBooksState, state => state.likedBooks.some(b => b.id === bookId)
-);
-
-export const selectLoading = createSelector(
-    selectLikedBooksState,
-    state => state.loading
-);
-
-export const selectError = createSelector(
-    selectLikedBooksState,
-    state => state.error
-);
 
 export const likedBooksReducer = createReducer(
     initialState,
@@ -32,7 +11,6 @@ export const likedBooksReducer = createReducer(
             loading: true
         })),
     on(LikedBooksActions.loadLikedBooksSuccess, (state, { books }) => {
-        console.log('Reducer received books:', books);
         return {
             ...state,
             loading: false,
@@ -70,5 +48,6 @@ export const likedBooksReducer = createReducer(
         loading: false,
         error
     })),
+
     on(logout, () => initialState)
 );
