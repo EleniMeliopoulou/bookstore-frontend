@@ -1,2 +1,92 @@
-# bookstore-frontend
-This repository contains the frontend of my bookstore web application (Reader's Circle) , developed using Angular. It includes user authentication, book browsing and the main site structure  (homepage, about, contact). This project communicates with a separate backend API.
+# Bookstore "Chapter One" – Frontend (Angular)
+
+This repository contains the frontend of the **Bookstore "Chapter One"** web application. It provides a modern, responsive UI for user authentication, profile management, browsing books, liking books, and handling cart operations.
+
+---
+
+## Features
+
+### User Interface
+- Login / Register pages
+- User profile alert
+
+### Book Catalog
+- Display all books with:
+  - Title
+  - Author
+  - Category
+  - Rating
+  - Description
+- Categorized carousels for easy browsing
+
+### Search
+- Search books by title in real time
+
+### Liked Books
+- Users can like/unlike books
+- Dedicated "My List" page
+- Persistent storage via backend API
+
+### Cart System
+- Add/Remove books from cart
+- View cart items
+- Proceed to checkout (UI only)
+- Future enhancement: persistent cart stored in backend
+
+---
+
+## Technologies Used 
+- Angular
+- TypeScript
+- RxJS
+- Angular Router
+- HTTPClient
+- CSS
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js + npm
+- Angular CLI
+---
+
+### Install Dependencies
+
+npm install
+---
+
+### Start Development Server
+
+npm run dev
+
+The app will run at:
+
+http://localhost:4200
+
+---
+
+## Backend Connection 
+
+Update the API base URL in `environment.ts`: 
+ts
+export const environment = {
+production: false,
+apiUrl: 'http://localhost:8080'
+};
+
+---
+
+## Future Enhancements
+
+### 🛒 Persistent Cart System
+- Save cart items in the backend
+- Restore cart after refresh or logout
+- Provide endpoints similar to liked-books
+
+---
+
+## Contribution
+
+This frontend was developed independently as part of the **Bookstore "Chapter One"** project.
