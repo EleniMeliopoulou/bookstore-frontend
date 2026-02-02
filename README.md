@@ -50,12 +50,10 @@ This repository contains the frontend of the **Bookstore "Chapter One"** web app
 ### Prerequisites
 - Node.js + npm
 - Angular CLI
----
 
 ### Install Dependencies
 
 npm install
----
 
 ### Start Development Server
 
@@ -70,7 +68,6 @@ http://localhost:4200
 ## Backend Connection 
 
 Update the API base URL in `environment.ts`: 
-ts
 export const environment = {
 production: false,
 apiUrl: 'http://localhost:8080'
@@ -80,7 +77,7 @@ apiUrl: 'http://localhost:8080'
 
 ## Future Enhancements
 
-### 🛒 Persistent Cart System
+### Persistent Cart System
 - Save cart items in the backend
 - Restore cart after refresh or logout
 - Provide endpoints similar to liked-books
