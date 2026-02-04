@@ -51,6 +51,13 @@ This repository contains the frontend of the **Bookstore "Chapter One"** web app
 - Node.js + npm
 - Angular CLI
 
+- Clone the Repository
+
+```bash
+git clone https://github.com/EleniMeliopoulou/bookstore-frontend.git
+cd bookstore-frontend
+```
+
 ### Install Dependencies
 
 npm install
