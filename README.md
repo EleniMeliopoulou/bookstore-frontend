@@ -64,7 +64,7 @@ npm install
 
 ### Start Development Server
 
-npm run dev
+ng serve
 
 The app will run at:
 
