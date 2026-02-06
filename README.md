@@ -99,4 +99,4 @@ apiUrl: 'http://localhost:8080'
 
 ## Contribution
 
-This frontend was developed independently as part of the **Bookstore "Chapter One"** project and is an enhanced version of the Online Library project.
+This frontend was developed independently as part of my personal project **Bookstore "Chapter One"** and is an enhanced version of the academic project **"Online Library"**.
