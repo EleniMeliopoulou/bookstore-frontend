@@ -17,6 +17,7 @@ This repository contains the frontend of the **Bookstore "Chapter One"** web app
   - Category
   - Rating
   - Description
+  - Publication Date
 - Categorized carousels for easy browsing
 
 ### Search
@@ -31,7 +32,6 @@ This repository contains the frontend of the **Bookstore "Chapter One"** web app
 - Add/Remove books from cart
 - View cart items
 - Proceed to checkout (UI only)
-- Future enhancement: persistent cart stored in backend
 
 ---
 
@@ -51,7 +51,7 @@ This repository contains the frontend of the **Bookstore "Chapter One"** web app
 - Node.js + npm
 - Angular CLI
 
-- Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/EleniMeliopoulou/bookstore-frontend.git
@@ -60,11 +60,15 @@ cd bookstore-frontend
 
 ### Install Dependencies
 
+```bash
 npm install
+```
 
 ### Start Development Server
 
+```bash
 ng serve
+```
 
 The app will run at:
 
@@ -75,10 +79,12 @@ http://localhost:4200
 ## Backend Connection 
 
 Update the API base URL in `environment.ts`: 
+```
 export const environment = {
 production: false,
 apiUrl: 'http://localhost:8080'
 };
+```
 
 ---
 
@@ -93,4 +99,4 @@ apiUrl: 'http://localhost:8080'
 
 ## Contribution
 
-This frontend was developed independently as part of the **Bookstore "Chapter One"** project.
+This frontend was developed independently as part of the **Bookstore "Chapter One"** project and is an enhanced version of the Online Library project.
